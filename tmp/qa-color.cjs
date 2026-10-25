@@ -1,0 +1,61 @@
+const {chromium}=require('C:/Users/USER/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{
+  const browser=await chromium.launch({channel:'chrome',headless:true});
+  const page=await browser.newPage({viewport:{width:900,height:580},deviceScaleFactor:1});
+  const errors=[];
+  page.on('pageerror',error=>errors.push(error.message));
+  await page.goto('http://127.0.0.1:4173/',{waitUntil:'domcontentloaded'});
+  await page.locator('#btn-start').click();
+  await page.locator('#btn-intro-skip').click();
+  await page.waitForFunction(()=>!document.querySelector('.game-shell').inert);
+  async function clearRoom(){
+    for(let i=0;i<25;i++){
+      const target=page.locator('.hidden-object:not(.found)').first();
+      if(!(await target.count())) break;
+      await target.evaluate(el=>el.dispatchEvent(new MouseEvent('click',{bubbles:true})));
+    }
+    await page.locator('#overlay-complete.active').waitFor({timeout:10000});
+  }
+  await clearRoom();
+  await page.locator('#btn-next-level').click();
+  await page.locator('#overlay-puzzle.active').waitFor();
+  await page.waitForTimeout(350);
+  await page.screenshot({path:'tmp/qa-color-slide-short.png'});
+  await page.setViewportSize({width:390,height:844});
+  await page.screenshot({path:'tmp/qa-color-slide-mobile.png'});
+  await page.setViewportSize({width:390,height:600});
+  const compact=await page.evaluate(()=>({card:document.querySelector('.puzzle-card').getBoundingClientRect().toJSON(),footer:document.querySelector('.puzzle-tools').getBoundingClientRect().toJSON(),scroll:document.querySelector('.puzzle-workbench').scrollHeight-document.querySelector('.puzzle-workbench').clientHeight}));
+  await page.setViewportSize({width:390,height:844});
+  await page.locator('.slide-tile.is-movable').first().click();
+  const move=await page.evaluate(()=>({moves:document.querySelector('#slide-move-count').textContent,status:document.querySelector('#puzzle-status').textContent}));
+  const slide=await page.evaluate(()=>({bars:document.querySelectorAll('#puzzle-activity-bars span').length,active:document.querySelectorAll('#puzzle-activity-bars .is-active').length,bands:[...new Set([...document.querySelectorAll('.slide-tile')].map(el=>el.dataset.band))],card:document.querySelector('.puzzle-card').getBoundingClientRect().toJSON()}));
+  await page.locator('#btn-puzzle-skip').click();
+  await page.waitForTimeout(350);
+  await page.screenshot({path:'tmp/qa-color-result.png'});
+  await page.locator('#overlay-map.active').waitFor({timeout:10000});
+  const locked=page.locator('.map-room.is-locked').first();
+  await locked.hover({force:true});
+  await page.screenshot({path:'tmp/qa-color-map.png'});
+  const map=await page.evaluate(()=>({route:document.querySelector('#map-route-line').getAttribute('d'),lockedBackground:getComputedStyle(document.querySelector('.map-room.is-locked:hover')).backgroundColor}));
+  await page.locator('#btn-map-travel').click();
+  await page.locator('#overlay-story.active').waitFor();
+  await page.waitForTimeout(350);
+  await page.screenshot({path:'tmp/qa-color-story-mobile.png'});
+  await page.setViewportSize({width:900,height:580});
+  await page.screenshot({path:'tmp/qa-color-story-short.png'});
+  await page.locator('#btn-story-continue').click();
+  await page.waitForFunction(()=>!document.querySelector('.game-shell').inert);
+  await clearRoom();
+  await page.locator('#btn-next-level').click();
+  await page.locator('#overlay-puzzle.active').waitFor();
+  await page.waitForTimeout(350);
+  await page.screenshot({path:'tmp/qa-color-cipher-short.png'});
+  await page.locator('#cipher-answer').fill('WRONG');
+  await page.locator('#btn-puzzle-check').click();
+  const denied=await page.locator('#puzzle-status').textContent();
+  await page.locator('#cipher-answer').fill('THE CORE');
+  await page.locator('#btn-puzzle-check').click();
+  const granted=await page.locator('#puzzle-status').textContent();
+  console.log(JSON.stringify({slide,move,compact,map,denied,granted,errors}));
+  await browser.close();
+})().catch(error=>{console.error(error);process.exitCode=1;});

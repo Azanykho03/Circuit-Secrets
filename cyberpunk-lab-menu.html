@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050810">
+  <title>Circuit Secrets | Computer Lab 2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&family=Oxanium:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{color-scheme:dark;--cyan:#78e8f4;--ice:#d8f8ff;--amber:#f2c45c;--green:#72f0b4;--ink:#050810;--font-display:"Oxanium",sans-serif;--font-data:"Space Mono",monospace;--font-body:"Barlow Semi Condensed",sans-serif}
+    *{box-sizing:border-box}
+    html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--ink);color:#e6f6fa;font-family:var(--font-data)}
+    body::before{position:fixed;inset:0;content:"";pointer-events:none;z-index:2;background:repeating-linear-gradient(0deg,rgba(200,245,255,.018) 0 1px,transparent 1px 4px);mix-blend-mode:screen;opacity:.35}
+    #lab{position:fixed;inset:0;overflow:hidden;background:radial-gradient(ellipse at 50% 48%,#102739 0%,#091321 52%,#050810 100%)}
+    #scene{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
+    .atmosphere{position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(180deg,rgba(2,5,11,.38),transparent 24%,transparent 63%,rgba(3,6,13,.64)),radial-gradient(ellipse at 50% 50%,transparent 36%,rgba(1,3,8,.58) 100%)}
+    .frame{position:absolute;inset:24px;z-index:4;pointer-events:none;border:1px solid rgba(119,209,227,.15);clip-path:polygon(0 0,calc(100% - 42px) 0,100% 42px,100% 100%,42px 100%,0 calc(100% - 42px))}
+    .frame::before,.frame::after{position:absolute;content:"";width:70px;height:70px;border-color:rgba(128,232,244,.62);border-style:solid}
+    .frame::before{top:-1px;left:-1px;border-width:1px 0 0 1px}
+    .frame::after{right:-1px;bottom:-1px;border-width:0 1px 1px 0}
+    .hud{position:absolute;inset:0;z-index:5;pointer-events:none}
+    .hud-top{position:absolute;top:46px;left:clamp(28px,5vw,74px);right:clamp(28px,5vw,74px);display:flex;align-items:flex-start;justify-content:space-between;gap:24px}
+    .brand{display:flex;align-items:center;gap:11px;color:#cdeef3;font-size:10px;letter-spacing:.18em;text-transform:uppercase}
+    .brand-chip{width:34px;height:34px;border:1px solid #6bbdcd;background:linear-gradient(145deg,#163343,#07131d);display:grid;place-items:center;box-shadow:inset 0 0 12px #4fd5f01d,0 0 14px #4bd6ef20}
+    .brand-chip svg{width:22px;height:22px;fill:none;stroke:#85edfa;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+    .brand small{display:block;margin-top:4px;color:#7899a7;font-size:8px;letter-spacing:.22em}
+    .telemetry{display:flex;gap:21px;text-align:right;color:#8caab5;font-size:9px;letter-spacing:.15em;text-transform:uppercase}
+    .telemetry b{display:block;margin-top:5px;color:#c4eaf0;font-weight:normal;font-size:11px;letter-spacing:.08em}
+    .telemetry .online{color:var(--green)}
+    .hud-bottom{position:absolute;left:clamp(28px,5vw,74px);right:clamp(28px,5vw,74px);bottom:43px;display:flex;justify-content:space-between;align-items:flex-end;color:#78929e;font-size:9px;letter-spacing:.15em;text-transform:uppercase}
+    .signal-status{display:flex;align-items:center;gap:8px}
+    .status-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 10px #72f0b4;animation:statusPulse 2.4s ease-in-out infinite}
+    .bottom-right{display:flex;align-items:center;gap:18px;text-align:right}
+    .bottom-right b{color:#d3edf1;font-weight:normal}
+    .hero{position:absolute;z-index:6;top:48%;left:50%;width:min(820px,calc(100% - 44px));transform:translate(-50%,-50%);text-align:center;pointer-events:none;animation:heroIn .9s cubic-bezier(.2,.8,.2,1) both}
+    .eyebrow{display:flex;align-items:center;justify-content:center;gap:13px;margin-bottom:19px;color:#9db8c2;font-size:10px;letter-spacing:.3em;text-transform:uppercase}
+    .eyebrow::before,.eyebrow::after{content:"";width:min(11vw,104px);height:1px;background:linear-gradient(90deg,transparent,#63c6d5)}
+    .eyebrow::after{transform:scaleX(-1)}
+    .eyebrow span{color:var(--amber)}
+    h1{margin:0;color:#eefaff;font:800 clamp(42px,7.7vw,94px)/1.04 var(--font-display);letter-spacing:.075em;text-shadow:0 2px 0 #536c78,0 5px 0 #172f3d,0 0 18px #8feaff69,0 12px 40px #000b}
+    h1 span{display:block}
+    .chapter{margin:13px 0 0;color:#88eafa;font:600 clamp(13px,2vw,19px)/1.3 var(--font-display);letter-spacing:.36em;text-shadow:0 0 17px #51d7f780}
+    .rule{width:min(390px,82%);height:1px;margin:22px auto 16px;background:linear-gradient(90deg,transparent,#9adfe96c,transparent)}
+    .subtitle{margin:0 auto;max-width:490px;color:#c0d4db;font:14px/1.7 var(--font-body);letter-spacing:.015em;text-shadow:0 2px 12px #000}
+    .actions{display:flex;flex-direction:column;align-items:center;gap:12px;margin:30px auto 0;pointer-events:auto}
+    .menu-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:13px;width:min(338px,100%);min-height:56px;padding:14px 24px;border:1px solid #e8c466;color:#ffe49a;background:linear-gradient(180deg,rgba(52,47,30,.94),rgba(17,21,25,.96));font:700 12px/1.2 var(--font-data);letter-spacing:.14em;text-decoration:none;text-shadow:0 0 10px #f2c45c78;box-shadow:0 4px 0 #392f1b,inset 0 1px 0 #fff1be55,0 0 23px #e5b74c20;cursor:pointer;transition:transform .16s ease,border-color .16s ease,color .16s ease,background .16s ease,box-shadow .16s ease;overflow:hidden}
+    .menu-btn::before,.menu-btn::after{position:absolute;left:0;right:0;height:4px;content:"";background:repeating-linear-gradient(135deg,#f2c45c 0 8px,transparent 8px 15px);opacity:.82}
+    .menu-btn::before{top:0}.menu-btn::after{bottom:0}
+    .menu-btn:hover{transform:translateY(-2px);border-color:#fff0b3;color:#fff1bb;background:linear-gradient(180deg,rgba(76,65,35,.97),rgba(21,26,30,.98));box-shadow:0 5px 0 #392f1b,inset 0 1px 0 #fff5cf7a,0 0 28px #f5c95c5c}
+    .menu-btn:active{transform:translateY(1px) scale(.99);box-shadow:0 2px 0 #392f1b,inset 0 1px 0 #fff1be55}
+    .menu-btn:focus-visible,.close-btn:focus-visible{outline:2px solid #f6d779;outline-offset:4px}
+    .menu-btn.secondary{min-height:48px;border-color:#5795a5;color:#bdeff5;background:rgba(5,19,29,.82);font-size:10px;box-shadow:0 3px 0 #0a1720,inset 0 1px 0 #d7fbff1d,0 0 18px #54cde319}
+    .menu-btn.secondary::before,.menu-btn.secondary::after{display:none}
+    .menu-btn.secondary:hover{border-color:#8eeaf4;color:#efffff;background:#0c2c3c;box-shadow:0 4px 0 #0a1720,0 0 25px #4dd8ee45}
+    .menu-btn .icon{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .hint-line{margin-top:13px;color:#92aeb8;font-size:9px;letter-spacing:.16em;text-transform:uppercase}
+    .hint-line kbd{display:inline-grid;place-items:center;min-width:21px;height:20px;margin:0 3px;padding:0 5px;border:1px solid #a2d7de55;color:#c9f7fb;background:#07141ebc;font:10px var(--font-data)}
+    .scanline{position:absolute;z-index:7;top:-20%;left:0;right:0;height:12%;pointer-events:none;background:linear-gradient(180deg,transparent,#7ceaff08,transparent);animation:screenScan 11s linear infinite}
+    .corner-readout{position:absolute;z-index:5;left:clamp(28px,5vw,74px);top:102px;color:#75909b;font-size:8px;line-height:1.8;letter-spacing:.13em;text-transform:uppercase;pointer-events:none}
+    .corner-readout b{color:#b6d6df;font-weight:normal}
+    .crosshair{position:absolute;width:27px;height:27px;z-index:5;opacity:.62;pointer-events:none}
+    .crosshair::before,.crosshair::after{position:absolute;content:"";background:#83e5f2}
+    .crosshair::before{left:12px;top:0;width:1px;height:27px}.crosshair::after{top:13px;left:0;width:27px;height:1px}
+    .crosshair i{position:absolute;inset:9px;border:1px solid #83e5f2;border-radius:50%}
+    .crosshair.one{right:8%;top:28%}.crosshair.two{left:10%;bottom:22%;transform:scale(.58);opacity:.4}
+    dialog{width:min(490px,calc(100% - 32px));padding:0;border:1px solid #5b9caa;color:#d9eff4;background:linear-gradient(150deg,rgba(15,37,51,.98),rgba(5,12,20,.98));box-shadow:0 0 0 6px #07131caa,0 0 55px #3bd3ed26;backdrop-filter:blur(16px)}
+    dialog::backdrop{background:rgba(1,4,9,.72);backdrop-filter:blur(5px)}
+    .modal-head{position:relative;padding:25px 28px 18px;border-bottom:1px solid #75cbd330}
+    .modal-kicker{color:var(--amber);font-size:9px;letter-spacing:.2em;text-transform:uppercase}
+    .modal-head h2{margin:10px 40px 0 0;color:#effbff;font:700 22px var(--font-display);letter-spacing:.04em}
+    .close-btn{position:absolute;top:15px;right:16px;width:34px;height:34px;border:1px solid #6e9ba7;color:#d5eff3;background:#0b1d28;cursor:pointer;font:20px var(--font-data)}
+    .modal-body{padding:20px 28px 24px;font:14px/1.7 var(--font-body);color:#c1d6dd}
+    .modal-body p{margin:0 0 12px}.modal-body ul{margin:8px 0 0;padding-left:19px}.modal-body li{margin:7px 0}
+    .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+    .modal-actions .menu-btn{width:auto;min-height:42px;padding:11px 17px;font-size:10px}
+    #toast{position:absolute;z-index:8;left:50%;bottom:85px;transform:translate(-50%,12px);padding:10px 16px;border:1px solid #6ad6e466;color:#c7f7f7;background:#061720e8;font-size:10px;letter-spacing:.11em;text-transform:uppercase;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;box-shadow:0 0 20px #47d9e522}
+    #toast.show{opacity:1;transform:translate(-50%,0)}
+    #webgl-warning{display:none;position:absolute;inset:auto 20px 22px;z-index:9;text-align:center;color:#f2c45c;font-size:12px}
+    @keyframes heroIn{from{opacity:0;transform:translate(-50%,-46%);filter:blur(5px)}to{opacity:1;transform:translate(-50%,-50%);filter:blur(0)}}
+    @keyframes screenScan{0%{transform:translateY(-10%);opacity:0}10%{opacity:.8}90%{opacity:.5}100%{transform:translateY(1100%);opacity:0}}
+    @keyframes statusPulse{50%{opacity:.38;box-shadow:0 0 3px #72f0b4}}
+    @media(max-width:640px){
+      .frame{inset:11px}.hud-top{top:25px;left:22px;right:22px}.brand{font-size:8px}.brand-chip{width:29px;height:29px}.brand-chip svg{width:19px;height:19px}.telemetry{gap:10px;font-size:7px}.telemetry b{font-size:9px}.telemetry>div:last-child{display:none}
+      .corner-readout{left:22px;top:65px;font-size:7px}.hero{top:49%;left:50%;width:calc(100% - 34px);text-align:center}.eyebrow{font-size:8px;letter-spacing:.18em;margin-bottom:14px;justify-content:center}.eyebrow::before,.eyebrow::after{width:30px}.chapter{letter-spacing:.25em}.rule{margin:17px auto 12px}.subtitle{max-width:390px;margin:0 auto;font-size:13px}.actions{align-items:center;margin:23px auto 0;gap:9px}.menu-btn{min-height:50px;width:min(320px,100%);font-size:10px}.menu-btn.secondary{min-height:44px}.hint-line{font-size:7px;margin-top:10px}.hud-bottom{left:22px;right:22px;bottom:25px;font-size:7px}.bottom-right{gap:8px}.bottom-right span:last-child{display:none}.crosshair.one{right:7%;top:21%}.crosshair.two{left:6%;bottom:17%}#toast{bottom:57px;width:max-content;max-width:calc(100% - 32px);text-align:center}.modal-head{padding:22px 20px 16px}.modal-body{padding:18px 20px 21px}.modal-actions{flex-direction:column-reverse}.modal-actions .menu-btn{width:100%}
+    }
+    @media(max-height:650px) and (min-width:641px){.hero{top:51%;transform:translate(-50%,-50%) scale(.86)}.hud-top{top:25px}.hud-bottom{bottom:24px}.corner-readout{top:78px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.hero{opacity:1;filter:none;transform:translate(-50%,-50%)}.status-dot{animation:none}}
+  </style>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <main id="lab" aria-label="Circuit Secrets computer laboratory menu">
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <div class="atmosphere" aria-hidden="true"></div>
+    <div class="frame" aria-hidden="true"></div>
+    <div class="scanline" aria-hidden="true"></div>
+    <div class="crosshair one" aria-hidden="true"><i></i></div>
+    <div class="crosshair two" aria-hidden="true"><i></i></div>
+
+    <header class="hud">
+      <div class="hud-top">
+        <div class="brand">
+          <span class="brand-chip" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3v4m5-4v4m5-4v4M7 17v4m5-4v4m5-4v4M3 7h4m10 0h4M3 12h4m10 0h4M3 17h4m10 0h4"/><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M10 10h4v4h-4z"/></svg></span>
+          <span>CIRCUIT SECRETS<small>COMPLAB 2 / CTU DANAO</small></span>
+        </div>
+        <div class="telemetry" aria-label="System status">
+          <div>Build<b>BETA V.12</b></div>
+          <div>Memory<b>64% / 128 MB</b></div>
+          <div>System<b class="online">ONLINE</b></div>
+        </div>
+      </div>
+      <div class="corner-readout">CASE FILE <b>CS-02-114</b><br>LAB STATUS <b>UNSTABLE</b></div>
+      <div class="hud-bottom">
+        <div class="signal-status"><i class="status-dot"></i><span>Signal detected in Computer Lab 2</span></div>
+        <div class="bottom-right"><span>ENGINEERING WING</span><span>EST. 1998</span><b>SECURE CHANNEL</b></div>
+      </div>
+    </header>
+
+    <section class="hero" aria-labelledby="game-title">
+      <div class="eyebrow"><span>Incident 01</span> CTU Danao · Engineering Wing</div>
+      <h1 id="game-title"><span>CIRCUIT</span><span>SECRETS</span></h1>
+      <p class="chapter">COMPLAB 2</p>
+      <div class="rule" aria-hidden="true"></div>
+      <p class="subtitle">A signal vanished. The lab remembers. Follow the evidence before the system goes dark.</p>
+      <div class="actions">
+        <button class="menu-btn" id="start" type="button">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 11 7-11 7z"/></svg>
+          <span>START INVESTIGATION</span>
+        </button>
+        <button class="menu-btn secondary" id="howto" type="button">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21zM4 5.5V21m4-14h8m-8 4h8"/></svg>
+          <span>HOW TO PLAY</span>
+        </button>
+      </div>
+      <div class="hint-line">Look around <kbd>DRAG</kbd> · Zoom <kbd>SCROLL</kbd></div>
+    </section>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+    <p id="webgl-warning">WebGL could not start. Try a browser with hardware acceleration enabled.</p>
+    <dialog id="modal" aria-labelledby="modal-title">
+        <div class="modal-head"><div class="modal-kicker" id="modal-kicker">Field Brief / Case 01</div><h2 id="modal-title">The Computer Lab 2 Incident</h2><button class="close-btn" id="close-modal" type="button" aria-label="Close">×</button></div>
+      <div class="modal-body" id="modal-content"></div>
+    </dialog>
+  </main>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+    import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+    import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+    import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+    const canvas=document.querySelector('#scene');
+    const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const scene=new THREE.Scene();
+    scene.background=new THREE.Color(0x050810);
+    scene.fog=new THREE.FogExp2(0x050810,.035);
+
+    const camera=new THREE.PerspectiveCamera(49,innerWidth/innerHeight,.1,100);
+    camera.position.set(0,5.2,15.8);
+    const lookAt=new THREE.Vector3(0,1.25,-2.35);
+    camera.lookAt(lookAt);
+
+    let renderer;
+    try{
+      renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'});
+    }catch(error){
+      document.querySelector('#webgl-warning').style.display='block';
+    }
+
+    if(renderer){
+      renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.65));
+      renderer.setSize(innerWidth,innerHeight);
+      renderer.shadowMap.enabled=true;
+      renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+      renderer.outputColorSpace=THREE.SRGBColorSpace;
+      renderer.toneMapping=THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure=1.08;
+
+      const composer=new EffectComposer(renderer);
+      composer.addPass(new RenderPass(scene,camera));
+      const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),1.22,.62,.28);
+      composer.addPass(bloom);
+      composer.addPass(new OutputPass());
+
+      const controls=new OrbitControls(camera,renderer.domElement);
+      controls.target.copy(lookAt);
+      controls.enableDamping=true;
+      controls.dampingFactor=.045;
+      controls.enablePan=false;
+      controls.minDistance=12.3;
+      controls.maxDistance=19;
+      controls.minPolarAngle=1.05;
+      controls.maxPolarAngle=1.32;
+      controls.minAzimuthAngle=-.52;
+      controls.maxAzimuthAngle=.52;
+      controls.autoRotate=!reducedMotion;
+      controls.autoRotateSpeed=.16;
+      controls.update();
+
+      const mat=(color,roughness=.48,metalness=.25,emissive=0x000000,emissiveIntensity=0)=>new THREE.MeshStandardMaterial({color,roughness,metalness,emissive,emissiveIntensity});
+      const dark=mat(0x101923,.4,.6),steel=mat(0x263541,.32,.72),steelLight=mat(0x445965,.3,.74),rubber=mat(0x080d13,.75,.12),floorMat=mat(0x111923,.28,.8),gold=mat(0xa78b50,.32,.74),cyanGlow=mat(0x0a2b38,.28,.15,0x21c5ec,1.8),greenGlow=mat(0x0c2a22,.3,.12,0x17f5a0,2.2),amberGlow=mat(0x332617,.34,.12,0xf1a933,1.55);
+      const addBox=(parent,w,h,d,x,y,z,material,shadows=true)=>{
+        const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material);
+        mesh.position.set(x,y,z);mesh.castShadow=shadows;mesh.receiveShadow=true;parent.add(mesh);return mesh;
+      };
+      const addCylinder=(parent,rTop,rBottom,height,x,y,z,material,segments=16)=>{
+        const mesh=new THREE.Mesh(new THREE.CylinderGeometry(rTop,rBottom,height,segments),material);
+        mesh.position.set(x,y,z);mesh.castShadow=true;mesh.receiveShadow=true;parent.add(mesh);return mesh;
+      };
+      scene.add(new THREE.HemisphereLight(0x4e7e9d,0x08090e,.48));
+      scene.add(new THREE.AmbientLight(0x182838,.48));
+      const key=new THREE.DirectionalLight(0x8acde8,2.6);key.position.set(-6,10,6);key.castShadow=true;key.shadow.mapSize.set(2048,2048);key.shadow.camera.left=-14;key.shadow.camera.right=14;key.shadow.camera.top=14;key.shadow.camera.bottom=-12;key.shadow.bias=-.0002;scene.add(key);
+      const blueFill=new THREE.PointLight(0x197ca5,36,18,2);blueFill.position.set(-4,3.3,-3);scene.add(blueFill);
+      const greenFill=new THREE.PointLight(0x13bc80,18,12,2);greenFill.position.set(4,2.8,-4);scene.add(greenFill);
+      const sweepLight=new THREE.PointLight(0x42cde7,9,5.4,2);sweepLight.position.set(-4,2.55,-1.15);scene.add(sweepLight);
+      const ceilingSpot=new THREE.SpotLight(0xa8e7ff,145,24,Math.PI/7,.5,1.7);ceilingSpot.position.set(0,8.6,-2.3);ceilingSpot.target.position.set(0,.5,-2.3);ceilingSpot.castShadow=true;ceilingSpot.shadow.mapSize.set(1024,1024);ceilingSpot.shadow.bias=-.0002;scene.add(ceilingSpot,ceilingSpot.target);
+
+      // The open-front shell keeps the center desk legible while the fog gives the far wall depth.
+      const floor=new THREE.Mesh(new THREE.PlaneGeometry(30,28),floorMat);floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;floor.position.set(0,-.04,-1.5);scene.add(floor);
+      addBox(scene,30,10,.45,0,5,-12.4,dark,false);
+      addBox(scene,.45,10,27,-14.8,5,1.1,dark,false);addBox(scene,.45,10,27,14.8,5,1.1,dark,false);
+      addBox(scene,30,.32,27,0,9.7,1.1,rubber,false);
+      for(let x=-13;x<=13;x+=2.6){addBox(scene,.08,.08,26,x,9.48,1.2,steel,false);}
+
+      const floorGrid=new THREE.GridHelper(28,38,0x274454,0x162b38);floorGrid.position.set(0,.005,-1.5);floorGrid.material.transparent=true;floorGrid.material.opacity=.16;scene.add(floorGrid);
+      for(let i=0;i<12;i++){
+        const z=-10.7+i*.72;
+        addBox(scene,27,.025,.025,0,5.1,z,steel,false);
+      }
+      for(let x=-13;x<=13;x+=1.3){
+        addBox(scene,.06,5.4,.05,x,4.9,-12.12,steel,false);
+      }
+      // Wall panels, cable trays, and ceiling conduits establish a practical lab rather than a blank box.
+      for(let x=-12;x<=12;x+=3){
+        addBox(scene,2.7,2.3,.14,x,4.3,-12.08,mat(0x111e29,.46,.56),false);
+        addBox(scene,2.42,.035,.035,x,5.28,-11.97,steelLight,false);
+      }
+      addBox(scene,22,.18,.26,0,8.85,-2.5,steel,false);
+      addBox(scene,22,.18,.26,0,8.85,4.4,steel,false);
+      for(const x of [-10,-6,6,10]){
+        addBox(scene,.18,.14,16,x,8.82,-1.1,steel,false);
+      }
+
+      const beam=new THREE.Mesh(new THREE.ConeGeometry(2.8,7.2,32,1,true),new THREE.MeshBasicMaterial({color:0x91eaff,transparent:true,opacity:.032,depthWrite:false,side:THREE.DoubleSide,blending:THREE.AdditiveBlending}));
+      beam.position.set(0,4.95,-2.3);scene.add(beam);
+      const lamp=addBox(scene,.72,.1,.72,0,9.28,-2.3,steelLight,false);
+      const lampCore=addBox(scene,.46,.035,.46,0,9.19,-2.3,mat(0xc4f4ff,.18,.1,0x8beeff,3.2),false);
+
+      const signalLines=[];
+      const blinkers=[];
+      const createMonitor=(parent,x,z,w=1.7,h=1.12,color=0x62e5ff,phase=0)=>{
+        const group=new THREE.Group();group.position.set(x,1.05,z);parent.add(group);
+        const casing=mat(0x101b25,.32,.68),bezel=mat(0x253845,.28,.72);
+        addBox(group,w,h,.42,0,h*.55,0,casing);
+        addBox(group,w*.91,h*.84,.035,0,h*.55,.223,bezel,false);
+        const screenMat=new THREE.MeshStandardMaterial({color:0x071a20,emissive:color,emissiveIntensity:2.2,roughness:.27,metalness:.12});
+        const screen=new THREE.Mesh(new THREE.PlaneGeometry(w*.79,h*.62),screenMat);screen.position.set(0,h*.58,.249);group.add(screen);
+        const positions=new Float32Array(72*3);const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.BufferAttribute(positions,3));
+        const line=new THREE.Line(geo,new THREE.LineBasicMaterial({color:color,transparent:true,opacity:.95}));line.position.set(0,h*.58,.258);group.add(line);
+        signalLines.push({positions,geo,count:72,width:w*.74,centerY:0,amp:h*.23,phase});
+        addBox(group,w*.29,.13,.035,0,.14,.23,casing,false);
+        addBox(group,.11,.11,.05,w*.32,.14,.245,mat(color,.2,.1,color,2.8),false);
+        for(let b=0;b<3;b++){
+          const ledMat=mat(b===0?0x1a704a:b===1?0x80682e:0x214c73,.23,.1,b===0?0x28ef9e:b===1?0xffb94d:0x48b9ff,.7);
+          const led=new THREE.Mesh(new THREE.SphereGeometry(.035,8,8),ledMat);led.position.set(-w*.33+b*.11,.15,.245);group.add(led);blinkers.push({material:ledMat,phase:phase+b*2.1});
+        }
+        addBox(group,w*.65,.055,.045,0,-.035,.2,steelLight,false);
+        const neck=addBox(group,.23,.24,.25,0,-.18,-.02,steel,false);
+        addBox(group,.75,.07,.48,0,-.31,-.03,steel,false);
+        return group;
+      };
+
+      const makeDesk=(x,z,index)=>{
+        const station=new THREE.Group();station.position.x=x;station.position.z=z;station.rotation.y=-x*.052;scene.add(station);
+        const top=addBox(station,3.35,.2,2.25,0,.94,0,mat(index===2?0x243844:0x1a2731,.32,.7));
+        addBox(station,3.28,.055,2.18,0,.81,0,mat(0x09131b,.44,.5));
+        for(const legX of [-1.43,1.43])for(const legZ of [-.87,.87]) addBox(station,.12,.8,.12,legX,.38,legZ,steel);
+        addBox(station,3.05,.035,.07,0,1.06,1.06,index===2?cyanGlow:steelLight,false);
+        const colors=[0x3ecbf3,0x42dcbd,0x72e99d,0x62aaff,0xffc168];
+        createMonitor(station,index===2?-.78:0,-.62,index===2?1.72:1.58,1.08,colors[index],index*.9);
+        // Keyboard, test board, and loose cabling make every work bay read as used equipment.
+        addBox(station,.95,.07,.34,-.05,1.09,.51,mat(0x111d26,.36,.5),false);
+        for(let key=0;key<24;key++)addBox(station,.075,.025,.055,-.47+(key%8)*.12,1.14,.41+Math.floor(key/8)*.09,mat(key%7===0?0x5e7f8b:0x72838a,.42,.3),false);
+        const board=addBox(station,.72,.055,.62,1.02,1.07,.31,mat(0x154d3b,.45,.18),false);
+        for(let c=0;c<7;c++)addBox(station,.09,.045,.08,.77+(c%4)*.15,1.12,.14+Math.floor(c/4)*.15,c%3===0?amberGlow:dark,false);
+        for(let c=0;c<3;c++)addBox(station,.07,.035,.47,-1.15+c*.16,1.08,.15,mat(c===1?0x902c39:0x344959,.48,.24),false);
+        const cable=new THREE.CatmullRomCurve3([new THREE.Vector3(-1.3,.93,.65),new THREE.Vector3(-1.2,.48,.82),new THREE.Vector3(-.5,.1,.92),new THREE.Vector3(.1,.07,.86)]);
+        const cableMesh=new THREE.Mesh(new THREE.TubeGeometry(cable,24,.025,6,false),mat(index%2?0x2184a0:0x7d3438,.48,.2));station.add(cableMesh);
+        addCylinder(station,.055,.055,.06,-1.28,1.08,-.1,mat(0x9ab0b8,.35,.55),12);
+        top.userData.station=index;board.userData.station=index;
+        return station;
+      };
+
+      const desks=[[-5.8,-.35],[-3.05,-1.45],[0,-1.95],[3.05,-1.45],[5.8,-.35]];
+      desks.forEach(([x,z],index)=>makeDesk(x,z,index));
+      // Two rack banks sit at the back of the room; small LEDs blink out of phase.
+      for(const rackX of [-8.5,8.5]){
+        const rack=new THREE.Group();rack.position.set(rackX,0,-8.65);scene.add(rack);
+        addBox(rack,1.7,3.4,.85,0,1.7,0,mat(0x0c141c,.3,.76));
+        addBox(rack,1.54,3.16,.08,0,1.7,.47,mat(0x172630,.35,.64),false);
+        for(let row=0;row<8;row++){
+          addBox(rack,1.38,.055,.06,0,.46+row*.37,.53,steelLight,false);
+          for(let col=0;col<4;col++){
+            const ledMat=mat((row+col)%3===0?0x17543c:(row+col)%3===1?0x13475e:0x5b4320,.2,.15,(row+col)%3===0?0x32eea0:(row+col)%3===1?0x22aaff:0xffbd4a,.65);
+            const led=new THREE.Mesh(new THREE.BoxGeometry(.045,.045,.035),ledMat);led.position.set(-.52+col*.15,.54+row*.37,.58);rack.add(led);blinkers.push({material:ledMat,phase:row*.91+col*1.37+rackX});
+          }
+        }
+        for(const x of [-.67,.67])addBox(rack,.06,3.25,.09,x,1.7,.58,steelLight,false);
+        for(let fan=0;fan<2;fan++){
+          const ring=new THREE.Mesh(new THREE.TorusGeometry(.2,.025,8,24),steelLight);ring.position.set(0,2.65-fan*.67,.59);rack.add(ring);
+          const fanCenter=new THREE.Mesh(new THREE.CircleGeometry(.06,16),cyanGlow);fanCenter.position.set(0,2.65-fan*.67,.6);rack.add(fanCenter);
+        }
+      }
+
+      // Loose lab equipment: soldering station, spool, component bins, and test leads.
+      const solder=addBox(scene,.9,.42,.56,-7.6,1.12,1.3,steel);addBox(scene,.62,.16,.05,-7.6,1.15,1.59,mat(0x111e25,.35,.5),false);
+      for(let i=0;i<3;i++)addCylinder(scene,.07,.07,.28,-7.86+i*.24,1.49,1.28,mat(0x8c9ea6,.28,.58),12);
+      for(const [x,z,color] of [[7.4,1.15,0x5b6d27],[-4.3,-4.0,0x825732],[4.35,-4.15,0x27485b]]){
+        const tub=addBox(scene,1.05,.5,.78,x,.28,z,mat(0x18242c,.56,.42));
+        for(let n=0;n<5;n++)addBox(scene,.12,.12,.12,x-.38+n*.19,.61,z-.08,mat(color,.5,.12),false);
+      }
+      const evidenceLamp=new THREE.Mesh(new THREE.SphereGeometry(.12,16,12),mat(0x5a3619,.3,.1,0xffaa40,2.2));evidenceLamp.position.set(-.55,1.65,-2.5);scene.add(evidenceLamp);
+
+      const dustCount=180;const dustPositions=new Float32Array(dustCount*3);const dustData=[];
+      for(let i=0;i<dustCount;i++){
+        dustPositions[i*3]=(Math.random()-.5)*22;dustPositions[i*3+1]=.25+Math.random()*7.6;dustPositions[i*3+2]=(Math.random()-.5)*19-1;
+        dustData.push({speed:.12+Math.random()*.25,phase:Math.random()*Math.PI*2,drift:.06+Math.random()*.13});
+      }
+      const dustGeo=new THREE.BufferGeometry();dustGeo.setAttribute('position',new THREE.BufferAttribute(dustPositions,3));
+      const dust=new THREE.Points(dustGeo,new THREE.PointsMaterial({color:0xa4eaff,size:.035,transparent:true,opacity:.38,depthWrite:false,sizeAttenuation:true}));scene.add(dust);
+
+      let flickerAt=7+Math.random()*5,flickerStart=-1;
+      const clock=new THREE.Clock();let time=0;
+      function animate(){
+        requestAnimationFrame(animate);
+        const dt=Math.min(clock.getDelta(),.05);time+=dt;
+        controls.update();
+        if(!reducedMotion){
+          sweepLight.position.x=Math.sin(time*.19)*5.7;
+          sweepLight.position.z=-1.25+Math.cos(time*.16)*.65;
+          sweepLight.intensity=8.6+Math.sin(time*1.2)*.65;
+          const pos=dustGeo.attributes.position.array;
+          for(let i=0;i<dustCount;i++){
+            const p=dustData[i];pos[i*3+1]+=p.speed*dt;pos[i*3]+=Math.sin(time*.35+p.phase)*p.drift*dt;
+            if(pos[i*3+1]>8){pos[i*3+1]=.25;pos[i*3]=(Math.random()-.5)*22;}
+          }
+          dustGeo.attributes.position.needsUpdate=true;
+          for(const led of blinkers)led.material.emissiveIntensity=.3+.75*(.5+.5*Math.sin(time*2.1+led.phase));
+          for(const signal of signalLines){
+            for(let i=0;i<signal.count;i++){
+              const t=i/(signal.count-1);const envelope=.35+.65*Math.pow(Math.sin(Math.PI*t),2);
+              signal.positions[i*3]=-signal.width*.5+t*signal.width;
+              signal.positions[i*3+1]=signal.centerY+Math.sin(t*Math.PI*9-time*3+signal.phase)*signal.amp*.5*envelope+Math.sin(t*Math.PI*2-time*.9)*signal.amp*.18;
+              signal.positions[i*3+2]=0;
+            }
+            signal.geo.attributes.position.needsUpdate=true;
+          }
+          beam.material.opacity=.026+Math.sin(time*.46)*.008;
+          lampCore.material.emissiveIntensity=2.4+Math.sin(time*1.5)*.35;
+          if(time>=flickerAt){flickerStart=time;flickerAt=time+8+Math.random()*11;}
+          if(flickerStart>=0){
+            const phase=time-flickerStart;
+            if(phase<.24)ceilingSpot.intensity=phase<.055?76:phase<.1?158:phase<.16?105:145;
+            else{ceilingSpot.intensity=145;flickerStart=-1;}
+          }
+        }
+        composer.render(dt);
+      }
+      animate();
+
+      const resize=()=>{
+        const w=innerWidth,h=innerHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);composer.setSize(w,h);
+      };
+      addEventListener('resize',resize,{passive:true});
+      addEventListener('visibilitychange',()=>{if(!document.hidden)clock.getDelta();});
+    }
+
+    const modal=document.querySelector('#modal');
+    const modalKicker=document.querySelector('#modal-kicker');
+    const modalTitle=document.querySelector('#modal-title');
+    const modalContent=document.querySelector('#modal-content');
+    const closeModal=()=>{if(modal.open)modal.close();};
+    const openModal=(kind)=>{
+      if(kind==='howto'){
+        modalKicker.textContent='Field Manual / Quick Controls';modalTitle.textContent='How to Play';
+        modalContent.innerHTML='<p>Take a moment to read the room before touching anything. The lab is built to reward careful observation.</p><ul><li>Drag the scene to look around the room.</li><li>Use the mouse wheel or trackpad to zoom, within the investigation frame.</li><li>Choose <b>Start Investigation</b> to open the Computer Lab 2 incident briefing.</li></ul><div class="modal-actions"><button class="menu-btn secondary" data-close type="button">BACK TO MENU</button></div>';
+      }else{
+        modalKicker.textContent='Field Brief / Case 01';modalTitle.textContent='The Computer Lab 2 Incident';
+        modalContent.innerHTML='<p>During a routine circuits practical at CTU Danao, Computer Lab 2 reported corrupted project files and an unauthorized access event. The computers shut down moments later.</p><p>Several components are missing. Someone left a signal running inside the room. Find out what happened before the trail goes cold.</p><div class="modal-actions"><button class="menu-btn secondary" data-close type="button">RETURN TO MENU</button><button class="menu-btn" id="enter-lab" type="button">ENTER COMPUTER LAB 2</button></div>';
+      }
+      modal.showModal();
+    };
+    const launchInvestigation=()=>{
+      closeModal();
+      const hero=document.querySelector('.hero');
+      if(hero){
+        hero.style.transition='opacity .25s ease, transform .25s ease';
+        hero.style.opacity='0.22';
+        hero.style.transform='translate(-50%, -50%) scale(.98)';
+      }
+      const toast=document.querySelector('#toast');
+      toast.textContent='ACCESS GRANTED · COMPUTER LAB 2 CHANNEL OPEN';
+      toast.classList.add('show');
+      setTimeout(()=>toast.classList.remove('show'),2600);
+    };
+    document.querySelector('#start').addEventListener('click',()=>openModal('briefing'));
+    document.querySelector('#howto').addEventListener('click',()=>openModal('howto'));
+    document.querySelector('#close-modal').addEventListener('click',closeModal);
+    modal.addEventListener('click',event=>{if(event.target===modal)closeModal();});
+    modal.addEventListener('click',event=>{
+      if(event.target.closest('[data-close]'))closeModal();
+      if(event.target.id==='enter-lab') launchInvestigation();
+    });
+  </script>
+</body>
+</html>

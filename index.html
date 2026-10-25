@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>Circuit Secrets: COMPLAB 2</title>
+<meta name="description" content="A Computer Engineering mystery at CTU Danao. Search the labs, recover the missing components, and trace the Circuit Secrets Protocol.">
+<meta name="theme-color" content="#07131a">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Circuit Secrets: COMPLAB 2">
+<meta property="og:description" content="A Computer Engineering mystery at CTU Danao. Follow the evidence through ten engineering locations.">
+<meta property="og:image" content="https://effortless-taffy-5a8ada.netlify.app/assets/social/circuit-secrets-share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Circuit Secrets COMPLAB 2, a computer engineering investigation at CTU Danao">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Circuit Secrets: COMPLAB 2">
+<meta name="twitter:description" content="A Computer Engineering mystery at CTU Danao.">
+<meta name="twitter:image" content="https://effortless-taffy-5a8ada.netlify.app/assets/social/circuit-secrets-share.png">
+<meta name="twitter:image:alt" content="Circuit Secrets COMPLAB 2, a computer engineering investigation at CTU Danao">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&family=Oxanium:wght@600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="prologue.css">
+<link rel="stylesheet" href="intro-cinematic.css">
+<link rel="stylesheet" href="game-polish.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js"
+  }
+}
+</script>
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ TITLE SCREEN ============ -->
+  <div class="screen active" id="screen-title">
+    <div class="home-world" id="home-3d" role="img" aria-label="Cinematic 3D view of the COMPLAB 2 workbench">
+      <div class="home-world-fallback" aria-hidden="true"></div>
+      <div class="home-world-shade" aria-hidden="true"></div>
+    </div>
+    <div class="title-frame">
+      <div class="home-brand">
+        <span class="home-brand-mark" aria-hidden="true">
+          <svg class="brand-insignia" viewBox="0 0 42 42" focusable="false">
+            <path class="brand-mark-pins" d="M5 13h5m-5 8h5m-5 8h5m22-16h5m-5 8h5m-5 8h5M13 5v5m8-5v5m8-5v5m-16 22v5m8-5v5m8-5v5"/>
+            <rect class="brand-mark-chip" x="10.5" y="10.5" width="21" height="21" rx="2.5"/>
+            <path class="brand-mark-trace" d="M15.5 17.5h10m-10 4.3h6.2m-6.2 4.3h4.4"/>
+            <circle class="brand-mark-lens" cx="26.5" cy="26.5" r="5.5"/>
+            <path class="brand-mark-handle" d="m30.5 30.5 4.1 4.1"/>
+            <circle class="brand-mark-node" cx="26.5" cy="26.5" r="1.35"/>
+          </svg>
+        </span>
+      </div>
+      <div class="home-audio" id="home-audio">
+        <button class="home-icon-button" id="btn-sound-title" type="button" aria-label="Open audio controls" aria-expanded="false" aria-controls="home-volume-panel" title="Audio controls"></button>
+        <div class="home-volume-panel" id="home-volume-panel" role="group" aria-label="Audio levels">
+          <label for="home-music-volume"><span>Music</span><output id="home-music-value" for="home-music-volume">65%</output></label>
+          <input id="home-music-volume" type="range" min="0" max="100" step="1" value="65" aria-label="Background music volume">
+          <label for="home-sfx-volume"><span>Sound effects</span><output id="home-sfx-value" for="home-sfx-volume">80%</output></label>
+          <input id="home-sfx-volume" type="range" min="0" max="100" step="1" value="80" aria-label="Sound effects volume">
+          <label class="reduced-effects-control" for="home-reduced-effects"><span>Reduced effects</span><input id="home-reduced-effects" type="checkbox" aria-label="Reduce visual effects"></label>
+          <small>Changes are saved on this device.</small>
+        </div>
+      </div>
+      <main class="home-copy">
+        <h1 class="game-title">CIRCUIT SECRETS<span class="sub-line">COMPLAB 2</span></h1>
+        <div class="title-actions">
+          <button class="btn btn-primary" id="btn-start" type="button"><span class="action-icon" aria-hidden="true"></span><span>Start Investigation</span></button>
+          <div class="home-secondary-actions">
+            <button class="btn btn-ghost" id="btn-howto"><span class="action-icon" aria-hidden="true"></span><span>How To Play</span></button>
+          </div>
+        </div>
+      </main>
+      <button class="home-about-link" id="btn-about" type="button">About this project</button>
+    </div>
+    <div class="modal-backdrop" id="modal-about" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="about-title" inert>
+      <div class="modal-box about-box">
+        <button class="dialog-close-button" id="btn-about-dismiss" type="button" aria-label="Close project information" title="Close">
+          <span class="ui-icon" aria-hidden="true"></span>
+        </button>
+        <span class="about-kicker">CTU Danao · Computer Engineering</span>
+        <h2 id="about-title">About This Project</h2>
+        <p><b>Project team / authors</b><br>Computer Engineering students, CTU Danao</p>
+        <p><b>Course project</b><br>COMPLAB 2</p>
+        <p>Circuit Secrets is an educational mystery game about investigating hardware, circuits, and system clues through careful observation and problem-solving.</p>
+        <p><a href="credits.html">Project credits and licenses</a></p>
+        <div class="close-row"><button class="btn btn-ghost" id="btn-about-close" type="button">Close</button></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="screen" id="screen-prologue" aria-label="The Circuit Secrets Protocol introduction" inert>
+    <div class="prologue-stage">
+      <div class="intro-scene" id="intro-scene"></div>
+      <img class="prologue-image" id="intro-image-a" alt="" aria-hidden="true">
+      <img class="prologue-image" id="intro-image-b" alt="" aria-hidden="true">
+      <div class="prologue-shade" aria-hidden="true"></div>
+      <div class="intro-cinema-overlay" aria-hidden="true"></div>
+      <p class="intro-media-note" id="intro-media-note" hidden></p>
+    </div>
+    <header class="prologue-header">
+    <div class="prologue-brand">CIRCUIT SECRETS<b>THE COMPLAB 2 INCIDENT</b></div>
+      <div class="prologue-top-controls">
+        <button id="btn-intro-sound" type="button" title="Mute introduction" aria-label="Mute introduction" aria-pressed="true">&#9834;</button>
+        <details class="prologue-menu" id="intro-menu">
+          <summary id="btn-intro-menu" aria-label="Open introduction menu" title="Introduction menu">Menu</summary>
+          <div class="prologue-menu-panel" aria-label="Introduction menu">
+            <div class="prologue-menu-actions">
+              <button id="btn-intro-home" type="button" title="Return to home" aria-label="Return to home">Home</button>
+              <button id="btn-intro-back" type="button" title="Previous scene" aria-label="Previous scene">Previous scene</button>
+              <button id="btn-intro-pause" type="button" title="Pause introduction" aria-label="Pause introduction">Pause</button>
+              <button id="btn-intro-skip" type="button">Skip Intro</button>
+            </div>
+            <div class="prologue-menu-scenes">
+              <span class="prologue-menu-label">CHAPTERS</span>
+              <div class="prologue-progress" id="intro-progress" role="group" aria-label="Introduction chapters"></div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </header>
+    <div class="prologue-caption">
+      <div class="transmission-panel">
+        <div class="prologue-meta">
+          <span id="intro-context"></span>
+          <span class="transmission-clock"><small>LOCAL TIME</small><b id="intro-clock"></b></span>
+          <span class="transmission-beat" id="intro-beat-counter"></span>
+        </div>
+        <div class="prologue-speaker">
+          <span id="intro-avatar" aria-label="Speaker portrait">
+            <img class="intro-speaker-portrait portrait-fiona" src="assets/intro/fiona-portrait.png.jpg" alt="" aria-hidden="true">
+            <img class="intro-speaker-portrait portrait-marie" src="assets/intro/marie-portrait.png.jpg" alt="" aria-hidden="true">
+            <img class="intro-speaker-portrait portrait-danlag" src="assets/intro/danlag-portrait.png.jpg" alt="" aria-hidden="true">
+            <span class="intro-speaker-initials" aria-hidden="true"></span>
+          </span>
+          <div><b id="intro-speaker-name"></b><span id="intro-speaker-role"></span></div>
+        </div>
+        <div class="intro-beat-progress" id="intro-beat-progress" aria-hidden="true"></div>
+        <div class="transmission-story" id="intro-story-area" aria-live="polite" aria-atomic="true">
+          <h2 id="intro-heading"></h2>
+          <p id="intro-dialogue"></p>
+        </div>
+        <div class="prologue-footer">
+          <div class="prologue-controls">
+            <button id="btn-intro-next" type="button">Continue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW TO PLAY MODAL ============ -->
+  <div class="modal-backdrop" id="modal-howto" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="howto-title" inert>
+    <div class="modal-box">
+      <button class="dialog-close-button" id="btn-howto-dismiss" type="button" aria-label="Close Field Manual" title="Close">
+        <span class="ui-icon" aria-hidden="true"></span>
+      </button>
+      <h2 id="howto-title">Field Manual</h2>
+      <div class="howto-step"><div class="howto-num">1</div><span class="howto-icon" data-manual-icon="search" aria-hidden="true"></span><p>Play as Fiona and search CTU Danao's engineering rooms for the components listed in the dock.</p></div>
+      <div class="howto-step"><div class="howto-num">2</div><span class="howto-icon" data-manual-icon="scan" aria-hidden="true"></span><p>Click or tap an object the moment you spot it — a correct find lights up and logs itself automatically.</p></div>
+      <div class="howto-step"><div class="howto-num">3</div><span class="howto-icon" data-manual-icon="alert" aria-hidden="true"></span><p>Wrong clicks cost a little time, so look before you tap. It's a small penalty, not a disaster.</p></div>
+      <div class="howto-step"><div class="howto-num">4</div><span class="howto-icon" data-manual-icon="lightbulb" aria-hidden="true"></span><p>Stuck? Use a HINT to reveal the general area of one missing part. Hints are limited per room.</p></div>
+      <div class="howto-step"><div class="howto-num">5</div><span class="howto-icon" data-manual-icon="clock" aria-hidden="true"></span><p>Clear every component before the timer runs out to advance to the next room.</p></div>
+      <div class="howto-step"><div class="howto-num">6</div><span class="howto-icon" data-manual-icon="file" aria-hidden="true"></span><p>Recovered clues are filed as evidence. Secure each room to unlock the next location.</p></div>
+      <div class="howto-step"><div class="howto-num">7</div><span class="howto-icon" data-manual-icon="network" aria-hidden="true"></span><p>Signal Lock shows your recovery progress in the room. Optional Overclock trades a faster timer for more points.</p></div>
+      <div class="howto-step"><div class="howto-num">8</div><span class="howto-icon" data-manual-icon="zoomIn" aria-hidden="true"></span><p>Zoom in to inspect small parts; after zooming, drag empty space to pan around the fixed workbench.</p></div>
+      <div class="howto-step"><div class="howto-num">+</div><span class="howto-icon" data-manual-icon="keyboard" aria-hidden="true"></span><p>Keyboard operators: <b>H</b> deploys a hint, <b>R</b> scans, and <b>P</b> pauses the investigation.</p></div>
+      <div class="close-row"><button class="btn btn-small" id="btn-howto-close">Got It</button></div>
+    </div>
+  </div>
+
+  <!-- ============ GAME SCREEN ============ -->
+  <div class="screen" id="screen-game">
+    <div class="game-shell">
+
+      <div class="hud">
+        <div class="hud-logo">CIRCUIT SECRETS</div>
+        <div class="hud-level" id="hud-level">LEVEL 1 — HARDWARE BAY</div>
+        <div class="hud-module"><span class="status-dot"></span><span>LAB LINK</span><b id="hud-link-status">ISOLATED</b></div>
+        <div class="hud-spacer"></div>
+        <div class="hud-stat timer" id="hud-timer-box">
+          <div class="lbl">TIME</div>
+          <div class="val" id="hud-timer">03:00</div>
+        </div>
+        <div class="hud-stat">
+          <div class="lbl">SCORE</div>
+          <div class="val" id="hud-score">0</div>
+        </div>
+        <div class="hud-stat">
+          <div class="lbl">FOUND</div>
+          <div class="val" id="hud-found">0/10</div>
+        </div>
+        <div class="hud-stat">
+          <div class="lbl">CHAIN</div>
+          <div class="val" id="hud-streak">0</div>
+        </div>
+        <div class="hud-stat overclock-stat" id="hud-overclock-box">
+          <div class="lbl">OVERCLOCK</div>
+          <div class="val" id="hud-overclock">0%</div>
+        </div>
+        <div class="hud-controls">
+          <button class="hud-icon-btn rail-utility" id="btn-pause" type="button" title="Pause (P)" aria-label="Pause or resume" aria-keyshortcuts="P"><span class="hud-icon-slot" aria-hidden="true"></span><span class="utility-label">PAUSE</span></button>
+          <button class="hud-icon-btn rail-utility" id="btn-restart" type="button" title="Restart level (Shift+R)" aria-label="Restart level" aria-keyshortcuts="Shift+R"><span class="hud-icon-slot" aria-hidden="true"></span><span class="utility-label">RESTART</span></button>
+          <button class="hud-icon-btn rail-utility" id="btn-sound-game" type="button" title="Toggle game sound (S)" aria-label="Toggle game sound" aria-keyshortcuts="S"><span class="hud-icon-slot" aria-hidden="true"></span><span class="utility-label">SOUND</span></button>
+        </div>
+      </div>
+
+      <div class="scene-wrap" id="scene-wrap">
+        <div class="scene-pan-layer" id="scene-pan-layer">
+          <div class="scene-3d" id="scene-3d" aria-hidden="true"></div>
+          <svg id="scene-svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+        <div class="scene-label" id="scene-label">HARDWARE BAY</div>
+        <div class="scene-zoom-controls" role="group" aria-label="Laboratory scene zoom controls">
+          <button id="btn-scene-zoom-out" type="button" title="Zoom out" aria-label="Zoom out" disabled></button>
+          <output id="scene-zoom-level" aria-live="off">100%</output>
+          <button id="btn-scene-zoom-in" type="button" title="Zoom in" aria-label="Zoom in"></button>
+          <button id="btn-scene-zoom-reset" type="button" title="Reset scene view" aria-label="Reset scene view" disabled></button>
+        </div>
+        <div class="zone-telemetry" aria-live="polite">
+          <div class="telemetry-head"><span class="telemetry-live">● LIVE FEED</span><span id="zone-channel">CH-01</span></div>
+          <div class="telemetry-row"><span title="Recovery progress: the reading rises as you find components.">SIGNAL LOCK</span><b id="zone-signal">72%</b></div>
+          <div class="telemetry-meter"><i id="zone-signal-fill"></i></div>
+          <div class="telemetry-coords" id="zone-coordinates">X: 000 // Y: 000</div>
+        </div>
+        <div class="zone-reticle" id="zone-reticle"><span></span><b></b></div>
+        <div class="zone-sweep"></div>
+        <div class="scene-vignette"></div>
+        <div class="scene-scanlines"></div>
+        <div class="scene-flicker"></div>
+        <div class="scene-arrival" id="scene-arrival" aria-hidden="true">
+          <span id="arrival-index">LOCATION 01</span>
+          <strong id="arrival-title">HARDWARE BAY</strong>
+        </div>
+        <div class="scene-status" id="scene-status" role="status" aria-live="polite"></div>
+      </div>
+
+      <aside class="tool-rail" aria-label="Investigation tools">
+        <button class="hud-icon-btn tool-button" id="btn-hint" type="button" title="Use a hint (H)" aria-label="Use a hint" aria-keyshortcuts="H"><span class="hud-icon-slot" aria-hidden="true"></span><span class="tool-label">HINT</span><kbd>H</kbd><span class="badge" id="hint-badge">3</span></button>
+        <button class="hud-icon-btn tool-button" id="btn-scan" type="button" title="Scan remaining components (R)" aria-label="Scan remaining components" aria-keyshortcuts="R"><span class="hud-icon-slot" aria-hidden="true"></span><span class="tool-label">SCAN</span><kbd>R</kbd><span class="badge" id="scan-badge">3</span></button>
+        <button class="hud-icon-btn tool-button" id="btn-case-file" type="button" title="Open evidence archive (E)" aria-label="Open evidence archive" aria-keyshortcuts="E"><span class="hud-icon-slot" aria-hidden="true"></span><span class="tool-label">LOG</span><kbd>E</kbd><span class="badge" id="evidence-badge">0</span></button>
+        <button class="hud-icon-btn tool-button" id="btn-map" type="button" title="Open investigation map (M)" aria-label="Open investigation map" aria-keyshortcuts="M"><span class="hud-icon-slot" aria-hidden="true"></span><span class="tool-label">MAP</span><kbd>M</kbd></button>
+      </aside>
+
+      <div class="inv-dock">
+        <div class="inv-head">
+          <div class="inv-title">COMPONENTS TO RECOVER</div>
+          <div class="progress-track" aria-label="Investigation progress"><div class="progress-fill" id="progress-fill"></div></div>
+          <output class="inventory-count" id="inventory-count" aria-live="polite">0/15</output>
+        </div>
+        <div class="inv-grid" id="inv-grid"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============ PAUSE OVERLAY ============ -->
+  <div class="overlay" id="overlay-case-file">
+    <div class="overlay-card case-file-card">
+      <button class="dialog-close-button overlay-close-button" id="btn-case-dismiss" type="button" aria-label="Return to Search" title="Return to Search"><span class="ui-icon" aria-hidden="true"></span></button>
+      <div class="overlay-kicker ok">FIONA'S INVESTIGATION FILE</div>
+      <h2 class="overlay-title">Evidence Archive</h2>
+      <div class="evidence-archive" id="evidence-archive" aria-live="polite">
+        <p class="archive-empty">No evidence recovered yet.</p>
+      </div>
+      <div class="overlay-actions">
+        <button class="btn btn-primary" id="btn-case-close" type="button">Return to Search</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay-map">
+    <div class="overlay-card map-card">
+      <button class="dialog-close-button overlay-close-button" id="btn-map-dismiss" type="button" aria-label="Return to Search" title="Return to Search"><span class="ui-icon" aria-hidden="true"></span></button>
+      <div class="overlay-kicker ok">CTU DANAO ENGINEERING WING</div>
+      <h2 class="overlay-title" id="map-title">Investigation Map</h2>
+      <p class="map-progress" id="map-progress"></p>
+      <div class="map-layout">
+        <div class="map-plot">
+          <div class="map-rooms" id="map-rooms" role="group" aria-label="Computer engineering wing floor map">
+            <div class="map-stage" id="map-stage">
+              <div class="map-scene-3d" id="map-scene-3d" aria-hidden="true"></div>
+              <img class="map-art" src="assets/maps/campus-map.svg" alt="" aria-hidden="true" draggable="false">
+              <div class="map-art-shade" aria-hidden="true"></div>
+              <svg class="map-route-art" id="map-route-art" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="map-route-shadow" id="map-route-shadow"></path><path class="map-route-line" id="map-route-line"></path></svg>
+              <div class="map-room-hotspots" id="map-room-hotspots"></div>
+            </div>
+            <div class="map-zoom-controls" aria-label="Map zoom controls">
+              <button id="btn-map-zoom-out" type="button" title="Zoom out" aria-label="Zoom out"></button>
+              <output id="map-zoom-level" aria-live="off">100%</output>
+              <button id="btn-map-zoom-in" type="button" title="Zoom in" aria-label="Zoom in"></button>
+              <button id="btn-map-zoom-reset" type="button" title="Reset map view" aria-label="Reset map view"></button>
+            </div>
+          </div>
+          <div class="map-legend" aria-hidden="true"><span class="is-current">Current</span><span class="is-complete">Investigated</span><span class="is-locked">Locked</span></div>
+        </div>
+        <div class="map-info">
+          <div class="map-selection-kicker">SELECTED LOCATION</div>
+          <div class="map-location-heading"><span class="map-location-number" id="map-location-number">01</span><div><h3 class="map-selection-title" id="map-selection-title"></h3><div class="map-selection-status" id="map-selection-status"></div></div></div>
+          <div class="overlay-story" id="map-detail"></div>
+          <div class="map-route-progress" id="map-route-progress" aria-hidden="true"></div>
+          <div class="overlay-actions map-actions">
+            <button class="btn btn-primary" id="btn-map-travel" type="button">Enter Location</button>
+            <button class="btn btn-ghost" id="btn-map-close" type="button">Return to Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay-pause">
+    <div class="overlay-card game-notification" data-notification="info">
+      <button class="dialog-close-button overlay-close-button" id="btn-pause-dismiss" type="button" aria-label="Resume investigation" title="Resume investigation"><span class="ui-icon" aria-hidden="true"></span></button>
+      <div class="overlay-kicker">SYSTEM HALTED</div>
+      <h2 class="overlay-title">PAUSED</h2>
+      <div class="overlay-actions">
+        <button class="btn btn-primary" id="btn-resume">Resume</button>
+        <button class="btn" id="btn-pause-restart">Restart Level</button>
+        <button class="btn btn-ghost" id="btn-pause-quit">Return to Home</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay-confirmation">
+    <div class="overlay-card confirmation-card game-notification" data-notification="warning">
+      <button class="dialog-close-button overlay-close-button" id="btn-confirm-dismiss" type="button" aria-label="Cancel action" title="Cancel action"><span class="ui-icon" aria-hidden="true"></span></button>
+      <div class="overlay-kicker">INVESTIGATION CONTROL</div>
+      <h2 class="overlay-title" id="confirm-title">CONFIRM ACTION</h2>
+      <p class="confirmation-message" id="confirm-message"></p>
+      <div class="overlay-actions confirmation-actions">
+        <button class="btn btn-primary" id="btn-confirm-accept" type="button">Continue</button>
+        <button class="btn btn-ghost" id="btn-confirm-cancel" type="button">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ INTRO / STORY OVERLAY (shown before a level begins) ============ -->
+  <div class="overlay" id="overlay-story">
+    <div class="overlay-card story-card">
+      <div class="story-topbar"><span>INVESTIGATION ROUTE <span aria-hidden="true">·</span> LOCATION ACCESS</span></div>
+      <button class="notification-icon notification-icon--corner story-exit" id="btn-story-exit" type="button" aria-label="Return to Home" title="Return to Home"></button>
+      <div class="story-layout">
+      <div class="story-map-visual" aria-hidden="true">
+          <img src="assets/maps/campus-map.svg" alt="">
+          <span class="story-map-scan"></span>
+          <span class="story-map-target"><b id="story-map-number">01</b></span>
+          <span class="story-map-caption" id="story-map-caption">NEW AREA UNLOCKED</span>
+        </div>
+        <div class="story-copy">
+          <div class="overlay-kicker ok" id="story-kicker">INVESTIGATION BRIEF</div>
+          <h2 class="overlay-title" id="story-title">THE COMPLAB 2 INCIDENT</h2>
+          <div class="overlay-story" id="story-text"></div>
+          <label class="overclock-choice" for="toggle-overclock">
+            <input id="toggle-overclock" type="checkbox">
+            <span class="overclock-switch" aria-hidden="true"></span>
+            <span><b>Engage Overclock</b><small>Timer runs faster; component score is multiplied. Off by default.</small></span>
+          </label>
+          <div class="story-route-wrap">
+            <span class="story-route-label" id="story-route-label">INVESTIGATION ROUTE · LOCATION 01 / 10</span>
+            <div class="story-route-progress" id="story-route-progress" aria-hidden="true"></div>
+          </div>
+          <div class="overlay-actions story-actions">
+            <button class="btn btn-primary" id="btn-story-continue">Begin Search</button>
+            <button class="btn btn-ghost" id="btn-story-reveal" type="button">Read Full Brief</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ LEVEL COMPLETE OVERLAY ============ -->
+  <div class="overlay" id="overlay-complete" role="dialog" aria-modal="true" aria-labelledby="cs-title">
+    <div class="overlay-card complete-card game-notification" data-notification="unlock">
+      <div class="complete-rivets" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      <div class="complete-sparks" id="cs-sparks" aria-hidden="true"></div>
+      <div class="complete-hero">
+        <div class="complete-emblem" aria-hidden="true">
+          <svg class="complete-medal" viewBox="0 0 150 118" focusable="false">
+            <defs>
+              <linearGradient id="rewardConsoleSteel" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7f9ca7"/><stop offset=".46" stop-color="#2d4856"/><stop offset="1" stop-color="#14232f"/></linearGradient>
+              <linearGradient id="rewardChipFace" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3d6571"/><stop offset=".54" stop-color="#173946"/><stop offset="1" stop-color="#0a2432"/></linearGradient>
+            </defs>
+            <rect class="reward-console-depth" x="7" y="10" width="136" height="103" rx="2"/>
+            <rect class="reward-console-shell" x="7" y="5" width="136" height="103" rx="2"/>
+            <path class="reward-console-edge" d="M11 9h128M11 9v94M11 103h128"/>
+            <rect class="reward-console-well" x="20" y="17" width="110" height="79" rx="1"/>
+            <path class="reward-console-traces" d="M27 35h25m-25 11h21m-21 22h21m-21 11h25m71-44H98m25 11h-21m21 22h-21m21 11H98M38 35v11m74 22v11M38 79v10h22m52-54V25H90"/>
+            <circle class="reward-console-node" cx="27" cy="35" r="2"/><circle class="reward-console-node" cx="123" cy="79" r="2"/>
+            <g class="reward-chip-group">
+              <rect class="reward-chip-shadow" x="57" y="33" width="44" height="56" rx="2"/>
+              <path class="reward-console-pins" d="M49 37h5m-5 9h5m-5 9h5m-5 9h5m-5 9h5m-5 9h5m44-45h5m-5 9h5m-5 9h5m-5 9h5m-5 9h5m-5 9h5"/>
+              <rect class="reward-console-chip" x="53" y="29" width="44" height="56" rx="2"/>
+              <path class="reward-chip-etch" d="M58 35h32M58 79h32"/>
+              <text class="reward-chip-label" x="75" y="47" text-anchor="middle">CASE</text>
+              <text id="cs-emblem-level" x="75" y="72" text-anchor="middle">01</text>
+            </g>
+            <circle class="reward-console-led" cx="31" cy="102" r="2.4"/>
+            <path class="reward-console-label" d="M42 102h44m7 0h20"/>
+          </svg>
+        </div>
+        <div class="complete-heading">
+          <div class="overlay-kicker ok" id="cs-room">LEVEL 01 · HARDWARE BAY</div>
+          <h2 class="overlay-title ok" id="cs-title">ROOM SECURED</h2>
+          <div class="complete-rank" id="cs-rank">CIRCUIT ACE</div>
+        </div>
+        <div class="complete-score"><span>ROOM SCORE</span><strong id="cs-score">0</strong><small id="cs-score-bonus">+0 BONUS</small></div>
+      </div>
+      <div class="complete-body">
+        <section class="complete-performance" aria-label="Room performance">
+          <div class="complete-stars" id="cs-stars" role="img" aria-label="Three of three stars">
+            <span class="reward-star">&#9733;</span><span class="reward-star">&#9733;</span><span class="reward-star">&#9733;</span>
+          </div>
+          <p class="complete-performance-line" id="cs-performance">Every component recovered.</p>
+          <div class="complete-metrics">
+            <div><span>TIME LEFT</span><strong id="cs-time">0:00</strong></div>
+            <div><span>RECOVERED</span><strong id="cs-found">10/10</strong></div>
+            <div><span>HINTS</span><strong id="cs-hints">0</strong></div>
+          </div>
+          <div class="complete-bonus-line"><span>TIME BONUS</span><strong id="cs-time-bonus">+0</strong></div>
+          <div class="complete-bonus-line"><span>PRECISION BONUS</span><strong id="cs-clean-bonus">+0</strong></div>
+        </section>
+        <section class="complete-evidence" aria-label="Recovered evidence">
+          <div class="complete-evidence-heading"><span class="notification-icon" data-notification-icon="unlock" aria-hidden="true"></span><span class="evidence-stamp" id="cs-evidence-index">E-01</span><span>EVIDENCE UNLOCKED</span></div>
+          <h3 id="cs-evidence-title">Evidence recovered</h3>
+          <p class="complete-evidence-detail" id="cs-evidence-detail"></p>
+          <p class="complete-clue" id="cs-clue"></p>
+        </section>
+      </div>
+      <div class="complete-footer">
+        <div class="complete-route"><span>CASE PROGRESS</span><strong id="cs-progress-label">01 / 10 ROOMS</strong><div class="complete-route-track" id="cs-progress" aria-hidden="true"></div></div>
+        <button class="btn btn-primary" id="btn-next-level">Continue Investigation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ LOCATION ACCESS PUZZLE ============ -->
+  <div class="overlay" id="overlay-puzzle">
+    <div class="overlay-card puzzle-card">
+      <button class="dialog-close-button overlay-close-button" id="btn-puzzle-dismiss" type="button" aria-label="Return to evidence file" title="Return to evidence file"><span class="ui-icon" aria-hidden="true"></span></button>
+      <div class="puzzle-topbar"><span>CASE ACCESS TERMINAL</span><span class="puzzle-lamps" aria-hidden="true"><i></i><i></i><i></i></span></div>
+      <div class="puzzle-activity" aria-hidden="true"><span class="puzzle-activity-label">SIGNAL</span><div class="puzzle-activity-bars" id="puzzle-activity-bars"></div><span class="puzzle-activity-id" id="puzzle-activity-id">01</span></div>
+      <div class="puzzle-header">
+        <div><div class="overlay-kicker ok" id="puzzle-kicker">EVIDENCE LOCK</div><h2 class="overlay-title" id="puzzle-title">Restore the Signal</h2></div>
+        <svg class="puzzle-wave" viewBox="0 0 180 50" aria-hidden="true" focusable="false"><path class="puzzle-wave-grid" d="M0 12H180M0 25H180M0 38H180M30 0V50M60 0V50M90 0V50M120 0V50M150 0V50"/><path class="puzzle-wave-line" d="M0 27h24l8-8 10 17 10-13 13 4h19l7-10 11 18 10-8h18l8-11 10 17 10-6h22"/></svg>
+      </div>
+      <div class="puzzle-workbench">
+        <div class="puzzle-brief">
+          <span class="puzzle-brief-label">EVIDENCE FEED</span>
+          <strong id="puzzle-evidence-title">Recovered trace</strong>
+          <p class="puzzle-prompt" id="puzzle-prompt"></p>
+          <div class="puzzle-code-strip" id="puzzle-code-strip" hidden><span>INTERCEPTED STRING</span><b id="puzzle-code"></b></div>
+          <div class="puzzle-signal-readout"><span>RELAY STATUS</span><b id="puzzle-status">AWAITING INPUT</b></div>
+        </div>
+        <form id="puzzle-form" autocomplete="off">
+          <div class="puzzle-panel" id="slide-panel">
+            <div class="sliding-grid" id="slide-grid" role="group" aria-label="Sliding signal tiles"></div>
+            <div class="slide-moves">RELAY MOVES <b id="slide-move-count">0</b></div>
+          </div>
+          <div class="puzzle-panel" id="cipher-panel" hidden>
+            <label for="cipher-answer" id="cipher-label">DECODED DESTINATION</label>
+            <input id="cipher-answer" type="text" maxlength="32" placeholder="ENTER LOCATION">
+          </div>
+          <div class="puzzle-panel" id="lock-panel" hidden>
+            <div class="lock-dials" id="lock-dials" role="group" aria-label="Four-digit access lock"></div>
+          </div>
+          <p class="puzzle-feedback" id="puzzle-feedback" aria-live="polite"></p>
+          <div class="overlay-actions" id="puzzle-submit">
+            <button class="btn btn-primary" id="btn-puzzle-check" type="submit">Check Answer</button>
+          </div>
+        </form>
+      </div>
+      <p class="puzzle-assist" id="puzzle-assist" role="status" hidden></p>
+      <div class="puzzle-tools">
+        <button class="puzzle-reset" id="btn-puzzle-reset" type="button" title="Reset puzzle" aria-label="Reset puzzle">&#x27F2;</button>
+        <button class="btn btn-ghost" id="btn-puzzle-hint" type="button">Hint</button>
+        <button class="btn btn-ghost" id="btn-puzzle-back" type="button" title="Review the evidence file">Evidence File</button>
+        <button class="btn btn-ghost" id="btn-puzzle-skip" type="button">Skip Puzzle</button>
+      </div>
+      <div class="puzzle-result" aria-hidden="true"><div class="puzzle-result-ring"></div><strong id="puzzle-result-title">ACCESS GRANTED</strong><span>CASE ROUTE UPDATED</span></div>
+    </div>
+  </div>
+
+  <!-- ============ TIME'S UP OVERLAY ============ -->
+  <div class="overlay" id="overlay-timeup">
+    <div class="overlay-card">
+      <div class="overlay-kicker">CONNECTION TIMED OUT</div>
+      <h2 class="overlay-title danger">TIME'S UP</h2>
+      <p style="font-size:13px;color:var(--text-dim);">The protocol locked this search before you finished the sweep.</p>
+      <div class="stat-grid">
+        <div class="stat-box"><span class="lbl">SCORE</span><span class="val" id="tu-score">0</span></div>
+        <div class="stat-box"><span class="lbl">FOUND</span><span class="val" id="tu-found">0/10</span></div>
+      </div>
+      <div class="overlay-actions">
+        <button class="btn btn-primary" id="btn-timeup-retry">Retry Room</button>
+        <button class="btn btn-ghost" id="btn-timeup-quit">Return to Home</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FINAL WIN OVERLAY ============ -->
+  <div class="overlay" id="overlay-win">
+    <div class="overlay-card">
+      <div class="overlay-kicker ok">CASE CLOSED</div>
+      <h2 class="overlay-title ok">CIRCUIT SECRETS: PROTOCOL EXPOSED</h2>
+      <div class="overlay-story" id="win-story"></div>
+      <div class="debrief" id="win-debrief"></div>
+      <div class="win-reaction" aria-label="Rate this investigation">
+        <span>HOW DID THIS CASE FEEL?</span>
+        <div class="win-reaction-options" id="win-reaction-options" role="group" aria-label="Choose a rating from one to five">
+          <button type="button" data-reaction="1" aria-label="1 out of 5, not enjoyable">1</button>
+          <button type="button" data-reaction="2" aria-label="2 out of 5">2</button>
+          <button type="button" data-reaction="3" aria-label="3 out of 5">3</button>
+          <button type="button" data-reaction="4" aria-label="4 out of 5">4</button>
+          <button type="button" data-reaction="5" aria-label="5 out of 5, very enjoyable">5</button>
+        </div>
+        <small id="win-reaction-status" role="status" aria-live="polite">Your rating is saved on this device.</small>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-box"><span class="lbl">TOTAL SCORE</span><span class="val" id="win-score">0</span></div>
+        <div class="stat-box"><span class="lbl">HINTS USED</span><span class="val" id="win-hints">0</span></div>
+      </div>
+      <div class="overlay-actions">
+        <button class="btn btn-primary" id="btn-play-again">Play Again</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="screen-transition" id="screen-transition" aria-hidden="true"></div>
+
+</div>
+
+<script src="assets.js"></script>
+<script src="ui-icons.js"></script>
+<script src="prologue.js"></script>
+<script src="main.js"></script>
+<script src="map-world.js"></script>
+<script type="module" src="intro-scene.js"></script>
+<script type="module" src="home-3d.js" onerror="window.HomeLab3DFailed=true;window.dispatchEvent(new Event('home-lab-error'))"></script>
+<script type="module" src="game-scene-3d.js"></script>
+<script type="module" src="map-scene-3d.js"></script>
+</body>
+</html>

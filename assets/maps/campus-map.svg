@@ -1,0 +1,204 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="667" viewBox="0 0 1000 667" role="img" aria-labelledby="title desc">
+  <title id="title">Computer engineering campus</title>
+  <desc id="desc">A hand-drawn game map with ten connected laboratory buildings, trees, footpaths and campus equipment.</desc>
+  <defs>
+    <linearGradient id="ground" x2=".8" y2="1"><stop stop-color="#173a38"/><stop offset=".55" stop-color="#22463b"/><stop offset="1" stop-color="#142d32"/></linearGradient>
+    <linearGradient id="path" x2=".2" y2="1"><stop stop-color="#d0bd92"/><stop offset="1" stop-color="#a99775"/></linearGradient>
+    <linearGradient id="roof-blue" x2="0" y2="1"><stop stop-color="#597992"/><stop offset=".5" stop-color="#34546c"/><stop offset="1" stop-color="#1b334b"/></linearGradient>
+    <linearGradient id="wall" x2="0" y2="1"><stop stop-color="#a6a592"/><stop offset="1" stop-color="#627580"/></linearGradient>
+    <linearGradient id="glass" x2="0" y2="1"><stop stop-color="#56b7c5" stop-opacity=".82"/><stop offset="1" stop-color="#152f47" stop-opacity=".9"/></linearGradient>
+    <linearGradient id="roof-rust" x2="0" y2="1"><stop stop-color="#d48a62"/><stop offset=".55" stop-color="#ab5c4d"/><stop offset="1" stop-color="#6f3841"/></linearGradient>
+    <radialGradient id="lamp"><stop stop-color="#ffe4a1" stop-opacity=".75"/><stop offset="1" stop-color="#ffe4a1" stop-opacity="0"/></radialGradient>
+    <radialGradient id="core-glow"><stop stop-color="#f1c6ff"/><stop offset=".45" stop-color="#a667d4"/><stop offset="1" stop-color="#482b71"/></radialGradient>
+    <radialGradient id="canopy"><stop stop-color="#60835c"/><stop offset=".65" stop-color="#3c684e"/><stop offset="1" stop-color="#254941"/></radialGradient>
+    <filter id="shadow" x="-30%" y="-40%" width="160%" height="180%"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="soft-glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="6"/></filter>
+    <pattern id="speckle" width="37" height="31" patternUnits="userSpaceOnUse"><circle cx="7" cy="8" r="1" fill="#9ab98b" opacity=".2"/><circle cx="25" cy="23" r="1.5" fill="#668b77" opacity=".3"/><path d="M32 4l3-2M12 25l2 3" stroke="#9ba979" stroke-width="1" opacity=".22"/></pattern>
+    <symbol id="tree" viewBox="-29 -32 58 68"><ellipse cy="27" rx="22" ry="7" fill="#081c27" opacity=".55"/><path d="M0 16V28" stroke="#61483c" stroke-width="8" stroke-linecap="round"/><circle cx="-9" cy="-2" r="19" fill="#2a5448"/><circle cx="11" cy="-6" r="18" fill="#305f4b"/><circle cx="1" cy="-16" r="19" fill="url(#canopy)"/><path d="M-17-14q10-9 20-9M4-22q12 1 17 10" fill="none" stroke="#86a374" stroke-width="2" opacity=".42"/></symbol>
+    <symbol id="amber-tree" viewBox="-29 -32 58 68"><ellipse cy="27" rx="22" ry="7" fill="#081c27" opacity=".5"/><path d="M0 16V28" stroke="#5c423b" stroke-width="8"/><circle cx="-10" cy="-4" r="19" fill="#a86540"/><circle cx="10" cy="-6" r="19" fill="#c7864b"/><circle cx="0" cy="-17" r="20" fill="#dda45a"/><path d="M-16-15q9-9 20-8M5-23q12 3 15 12" fill="none" stroke="#f2c274" stroke-width="2" opacity=".5"/></symbol>
+    <symbol id="lamp-post" viewBox="-16 -25 32 65"><ellipse cy="31" rx="9" ry="3" fill="#071921" opacity=".5"/><path d="M0 29V-12" stroke="#263944" stroke-width="5"/><path d="M-9-12h18l-4-9h-10z" fill="#293e47" stroke="#75909a" stroke-width="2"/><circle cy="-12" r="27" fill="url(#lamp)"/><path d="M-6-12h12" stroke="#ffe4a1" stroke-width="3"/></symbol>
+  </defs>
+
+  <rect width="1000" height="667" fill="url(#ground)"/>
+  <path d="M0 0h1000v148q-104 30-181 9-78-21-164 21-78 38-181 7-82-25-155-4Q145 235 0 161Z" fill="#315446" opacity=".55"/>
+  <path d="M0 410q79-27 158-4 83 25 173-21 129-66 239-8 108 56 212 18 112-42 218-5v277H0Z" fill="#294c40" opacity=".65"/>
+  <path d="M458 0q54 53 101 39 58-16 111-35M0 279q90 11 140-34M822 0q56 59 178 40" fill="none" stroke="#4a6e54" stroke-width="38" opacity=".17"/>
+  <rect width="1000" height="667" fill="url(#speckle)"/>
+
+  <!-- The warm walkway network is painted underneath the buildings and garden beds. -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M507 667q-10-95 33-151 38-54 6-107-47-77 7-135 35-39 4-94-26-47 5-180M540 508q-90 13-138 36t-93 7M551 406q105-14 182-48M545 284q-96 7-171-8M558 183q83 3 129-30M552 119Q470 88 366 160" stroke="#0a292c" stroke-width="69" opacity=".8"/>
+    <path d="M507 667q-10-95 33-151 38-54 6-107-47-77 7-135 35-39 4-94-26-47 5-180M540 508q-90 13-138 36t-93 7M551 406q105-14 182-48M545 284q-96 7-171-8M558 183q83 3 129-30M552 119Q470 88 366 160" stroke="#807b62" stroke-width="58"/>
+    <path d="M507 667q-10-95 33-151 38-54 6-107-47-77 7-135 35-39 4-94-26-47 5-180M540 508q-90 13-138 36t-93 7M551 406q105-14 182-48M545 284q-96 7-171-8M558 183q83 3 129-30M552 119Q470 88 366 160" stroke="url(#path)" stroke-width="47"/>
+    <path d="M508 650q-5-94 35-137m6-109q-48-77 6-129m-2-94q25-48 7-93M530 506q-63 13-112 33M567 396q79-14 145-37" stroke="#e3d4ab" stroke-width="3" opacity=".5" stroke-dasharray="10 19"/>
+  </g>
+  <path d="M636 557q81-53 155-9 76 43 209-18v137H586q12-70 50-110Z" fill="#0b303e" stroke="#2d6970" stroke-width="7"/>
+  <path d="M622 622q65-49 134-25 77 28 138-5 52-27 106-16M604 650q67-37 129-17 84 24 151-9" fill="none" stroke="#236b78" stroke-width="5" opacity=".65"/>
+  <path d="M589 548l160 26 17 42-165-25z" fill="#4d5d5b" stroke="#1d343c" stroke-width="5"/>
+  <path d="M602 557l153 27M602 569l156 27M605 582l155 27" stroke="#b0a88b" stroke-width="4"/>
+
+  <!-- Workshop: an open hardware bay with warm benches and a blue ridged roof. -->
+  <g id="hardware-bay">
+    <ellipse cx="225" cy="228" rx="180" ry="36" fill="#041820" opacity=".68" filter="url(#shadow)"/>
+    <path d="M63 108 300 46l115 54-238 72Z" fill="#79909a" stroke="#112e39" stroke-width="7"/>
+    <path d="M82 112 304 58l94 43-219 67Z" fill="url(#roof-blue)"/>
+    <path d="M92 128 180 166v73l-88-43Z" fill="#566f70" stroke="#18303c" stroke-width="5"/>
+    <path d="M180 166 398 102v86l-218 51Z" fill="url(#wall)" stroke="#18303c" stroke-width="5"/>
+    <path d="M174 164 397 101v15l-223 63Z" fill="#243c50"/>
+    <path d="M216 170 350 132v76l-134 31Z" fill="#122935" stroke="#c09f6c" stroke-width="5"/>
+    <path d="M221 174 345 140v65l-124 27Z" fill="#243b3c"/>
+    <path d="M233 196l41-11 28 11-40 10z" fill="#b2895f"/><path d="M234 201v19l27-13v-6M302 193l26-7v17l-26 7z" fill="#496777" stroke="#1a303b" stroke-width="3"/>
+    <path d="M240 182l8-2v19l-8 2zM260 176l8-2v18l-8 2zM280 171l8-2v19l-8 2z" fill="#76d7df"/>
+    <path d="M105 138l54 20v32l-54-19z" fill="#254854" stroke="#7eb3b6" stroke-width="4"/>
+    <path d="M111 145l42 16M111 156l42 16" stroke="#56b9c8" stroke-width="2"/>
+    <path d="M191 65 152 74 86 113M232 56l-42 11-75 61M274 52l-48 12-71 79M317 63l-52 15-68 82M357 82l-47 15-66 75" stroke="#9db6b7" stroke-width="3" opacity=".7"/>
+    <path d="M340 199l45-11v17l-45 12z" fill="#ae6750"/><path d="M342 197l45-11v6l-45 12z" fill="#dd9865"/>
+    <circle cx="187" cy="198" r="5" fill="#ffe8a2"/><circle cx="382" cy="145" r="5" fill="#ffe8a2"/>
+    <path d="M176 239 398 186l15 11-229 55Z" fill="#65736d"/>
+    <path d="M187 251l-13 14m39-20-12 17m47-25-11 17m51-28-10 18" stroke="#c5b792" stroke-width="6"/>
+  </g>
+
+  <!-- Server room: the glass facade exposes rows of blue-lit racks. -->
+  <g id="server-room">
+    <ellipse cx="765" cy="226" rx="176" ry="33" fill="#041820" opacity=".67" filter="url(#shadow)"/>
+    <path d="M604 92 820 44l142 58-224 61Z" fill="#456478" stroke="#132e3d" stroke-width="7"/>
+    <path d="M622 94 822 56l120 47-207 53Z" fill="url(#roof-blue)"/>
+    <path d="M617 105 736 157v79l-119-57Z" fill="#284b58" stroke="#142e3a" stroke-width="5"/>
+    <path d="M736 157 947 102v82l-211 52Z" fill="#31596a" stroke="#142e3a" stroke-width="5"/>
+    <path d="M749 163 928 116v64l-179 45Z" fill="url(#glass)" stroke="#9bdce3" stroke-width="4"/>
+    <path d="M782 154v63M816 145v63M850 137v62M884 128v62M919 120v62" stroke="#accdd3" stroke-width="4"/>
+    <path d="M753 185 925 139M751 205 925 159" stroke="#92dce7" stroke-width="2" opacity=".5"/>
+    <path d="M759 183l18-5v35l-18 4zM788 174l18-5v36l-18 5zM820 165l18-5v36l-18 5zM852 156l18-5v36l-18 5zM884 147l18-5v36l-18 5z" fill="#0c2637" stroke="#44829d" stroke-width="2"/>
+    <g fill="#67e2f0"><circle cx="764" cy="188" r="2"/><circle cx="793" cy="178" r="2"/><circle cx="824" cy="171" r="2"/><circle cx="857" cy="162" r="2"/><circle cx="889" cy="151" r="2"/></g>
+    <path d="M626 118 723 161v55l-97-45Z" fill="#315c69" stroke="#79adb6" stroke-width="3"/>
+    <path d="M640 129 710 161M640 147l70 31" stroke="#69a9b6" stroke-width="2"/>
+    <path d="M654 86 821 49M691 103 856 61M727 119 893 77M761 136 928 94" stroke="#7896a5" stroke-width="3" opacity=".7"/>
+    <path d="M751 235 947 185l17 9-206 55Z" fill="#6b7973"/>
+    <path d="M757 249l-11 17m42-26-8 17m40-24-7 17m41-25-5 16" stroke="#c4b68d" stroke-width="6"/>
+  </g>
+
+  <!-- Shielded test chamber and its glowing core. -->
+  <g id="quantum-core">
+    <ellipse cx="221" cy="433" rx="164" ry="35" fill="#051820" opacity=".72" filter="url(#shadow)"/>
+    <ellipse cx="218" cy="400" rx="148" ry="48" fill="#5b6670" stroke="#1b3345" stroke-width="7"/>
+    <path d="M73 334q5-89 145-91 143 2 147 91v64q-16 54-147 57Q84 450 73 399Z" fill="#355467" stroke="#183443" stroke-width="7"/>
+    <ellipse cx="219" cy="335" rx="147" ry="82" fill="#527287" stroke="#1a3547" stroke-width="7"/>
+    <ellipse cx="219" cy="335" rx="113" ry="65" fill="#1a3048" stroke="#8ba7b2" stroke-width="6"/>
+    <ellipse cx="219" cy="335" rx="86" ry="51" fill="#684183" stroke="#bb91ce" stroke-width="5"/>
+    <ellipse cx="219" cy="335" rx="54" ry="33" fill="url(#core-glow)"/>
+    <ellipse cx="219" cy="335" rx="78" ry="45" fill="none" stroke="#cf9eed" stroke-width="4" opacity=".9"/>
+    <ellipse cx="219" cy="335" rx="38" ry="23" fill="none" stroke="#fff0ff" stroke-width="3" opacity=".8"/>
+    <path d="M78 352q51 49 145 48 96 0 137-48M101 386q50 31 117 31 71 0 121-30" fill="none" stroke="#94b3bd" stroke-width="5"/>
+    <path d="M112 377v47M150 393v51M287 392v51M327 376v49" stroke="#9cbbc4" stroke-width="6"/>
+    <path d="M161 410h112v36H161z" fill="#172b3a" stroke="#869ea3" stroke-width="4"/>
+    <path d="M175 420h15m11 0h15m11 0h15m11 0h9" stroke="#a6ebce" stroke-width="3"/>
+    <path d="M183 457 173 474m31-15-6 17m29-17-2 17m28-18 5 16" stroke="#b6a985" stroke-width="5"/>
+  </g>
+
+  <!-- Diagnostics hut, dish and rooftop antennas. -->
+  <g id="signal-vault">
+    <ellipse cx="801" cy="454" rx="150" ry="28" fill="#041820" opacity=".7" filter="url(#shadow)"/>
+    <path d="M651 348 828 297l121 49-183 60Z" fill="#65808c" stroke="#193747" stroke-width="6"/>
+    <path d="M666 350 829 309l103 40-166 52Z" fill="url(#roof-blue)"/>
+    <path d="M670 366 767 404v75l-97-45Z" fill="#53737a" stroke="#18343f" stroke-width="5"/>
+    <path d="M767 404 932 350v80l-165 49Z" fill="#879187" stroke="#18343f" stroke-width="5"/>
+    <path d="M782 411 867 383v62l-85 26Z" fill="#102b3c" stroke="#d1bb8c" stroke-width="5"/>
+    <path d="M789 414 861 391v45l-72 22Z" fill="#1d4951"/>
+    <path d="M795 443q13-19 24-13t23-17" fill="none" stroke="#83f2c4" stroke-width="4"/>
+    <path d="M876 378 917 365v42l-41 13Z" fill="#315866" stroke="#80b2bb" stroke-width="3"/>
+    <path d="M683 372 750 399v35l-67-28Z" fill="#2a5260" stroke="#96b9b7" stroke-width="3"/>
+    <path d="M718 320 713 284m10 35 14-36M866 316v-37" stroke="#253844" stroke-width="5"/>
+    <circle cx="866" cy="275" r="5" fill="#ffd991"/>
+    <path d="M777 273q51-43 94-3-8 48-60 54Z" fill="#9ab9bf" stroke="#2c4a5a" stroke-width="5"/>
+    <ellipse cx="824" cy="294" rx="38" ry="18" transform="rotate(-20 824 294)" fill="#4b7281" stroke="#cee4df" stroke-width="4"/>
+    <path d="M825 300 851 333m-24-32 2-29" stroke="#2e4754" stroke-width="5"/>
+    <circle cx="829" cy="271" r="6" fill="#ffe9ac"/>
+    <path d="M775 482 932 434l20 10-169 52Z" fill="#778579"/>
+  </g>
+
+  <!-- Fabrication deck: copper roof, cutaway workbench and a small robot arm. -->
+  <g id="fabrication-deck">
+    <ellipse cx="239" cy="620" rx="196" ry="32" fill="#041820" opacity=".72" filter="url(#shadow)"/>
+    <path d="M52 497 280 445l159 57-238 66Z" fill="#b06b55" stroke="#3c3541" stroke-width="7"/>
+    <path d="M70 500 280 456l140 48-219 60Z" fill="url(#roof-rust)"/>
+    <path d="M73 511 202 562v74L73 585Z" fill="#6d6a60" stroke="#2b3a40" stroke-width="6"/>
+    <path d="M202 562 421 504v77l-219 55Z" fill="#9e8972" stroke="#2b3a40" stroke-width="6"/>
+    <path d="M231 567 376 530v63l-145 36Z" fill="#182b36" stroke="#d4ab77" stroke-width="5"/>
+    <path d="M241 574 364 542v44l-123 31Z" fill="#334d46"/>
+    <path d="M252 587 339 565l14 7-89 24Z" fill="#c79b68"/>
+    <path d="M267 585v23M338 566v25" stroke="#625349" stroke-width="4"/>
+    <path d="M300 563q9-20 21-24l13-27 21 6-12 29q9 4 10 13l-19 7-9-13Z" fill="#dca35b" stroke="#66463e" stroke-width="4"/>
+    <circle cx="335" cy="520" r="9" fill="#3e5860" stroke="#e0c386" stroke-width="3"/>
+    <path d="M94 526 183 562v40l-89-38Z" fill="#324e55" stroke="#9aa99d" stroke-width="4"/>
+    <path d="M105 535l67 26m-67-10 67 27" stroke="#85b8ab" stroke-width="3"/>
+    <path d="M95 488 280 451M135 502l184-45M178 518l181-47M218 534l179-46" stroke="#df9c70" stroke-width="3" opacity=".6"/>
+    <path d="M205 638 421 580l18 13-228 57Z" fill="#777f6e"/>
+    <path d="M221 648l-12 16m43-22-9 17m41-25-7 16m41-24-6 16" stroke="#c4b48b" stroke-width="6"/>
+  </g>
+
+  <!-- Four smaller annex labs sit along the central walk between the original wings. -->
+  <g id="esd-archive">
+    <ellipse cx="506" cy="135" rx="73" ry="15" fill="#041820" opacity=".6" filter="url(#shadow)"/>
+    <path d="M434 68 506 43l75 25-73 28z" fill="#4e8375" stroke="#183a42" stroke-width="4"/>
+    <path d="M440 72 508 95v47l-68-22z" fill="#4e726b" stroke="#193742" stroke-width="4"/>
+    <path d="M508 95 576 70v48l-68 24z" fill="#799489" stroke="#193742" stroke-width="4"/>
+    <path d="m519 103 45-16v39l-45 15z" fill="#23464d" stroke="#9bb9a9" stroke-width="3"/>
+    <path d="m447 81 51 17m-51-6 51 17m-51-6 51 17" stroke="#92bbac" stroke-width="2"/>
+    <path d="M448 62 507 46l57 19" fill="none" stroke="#a6d5b3" stroke-width="3" opacity=".65"/>
+  </g>
+  <g id="robotics-lab">
+    <ellipse cx="507" cy="264" rx="80" ry="17" fill="#041820" opacity=".6" filter="url(#shadow)"/>
+    <path d="M429 185 507 159l79 30-79 29z" fill="#a7735f" stroke="#30404a" stroke-width="4"/>
+    <path d="m437 188 70 28v48l-70-27z" fill="#6b7772" stroke="#213b44" stroke-width="4"/>
+    <path d="m507 216 71-27v49l-71 26z" fill="#9b9680" stroke="#213b44" stroke-width="4"/>
+    <path d="m520 221 46-18v34l-46 17z" fill="#243b45" stroke="#d5a472" stroke-width="3"/>
+    <path d="m531 242 11-18 9-8 6 8-7 9-8 5" fill="none" stroke="#edbb78" stroke-width="5" stroke-linejoin="round"/>
+    <circle cx="542" cy="225" r="4" fill="#e9d4a5"/>
+  </g>
+  <g id="power-systems">
+    <ellipse cx="503" cy="407" rx="77" ry="17" fill="#041820" opacity=".6" filter="url(#shadow)"/>
+    <path d="m430 325 70-23 80 27-74 27z" fill="#637c83" stroke="#203a43" stroke-width="4"/>
+    <path d="m437 331 69 24v54l-69-25z" fill="#617c7d" stroke="#203a43" stroke-width="4"/>
+    <path d="m506 355 67-25v53l-67 26z" fill="#8b9185" stroke="#203a43" stroke-width="4"/>
+    <path d="m518 362 42-16v34l-42 16z" fill="#203c49" stroke="#e4c37c" stroke-width="3"/>
+    <path d="m541 352-12 20h10l-7 17 19-23h-10l9-17" fill="#f5c26a"/>
+    <path d="M453 339v40m14-37v40m14-35v39" stroke="#3c5558" stroke-width="5"/>
+  </g>
+  <g id="firmware-studio">
+    <ellipse cx="502" cy="546" rx="83" ry="18" fill="#041820" opacity=".6" filter="url(#shadow)"/>
+    <path d="m422 466 82-29 86 31-83 34z" fill="#476f83" stroke="#1b3745" stroke-width="5"/>
+    <path d="m431 471 76 30v49l-76-29z" fill="#426678" stroke="#193744" stroke-width="4"/>
+    <path d="m507 501 75-30v49l-75 30z" fill="#7e958d" stroke="#193744" stroke-width="4"/>
+    <path d="m522 504 46-19v31l-46 20z" fill="#123648" stroke="#9ad4d7" stroke-width="3"/>
+    <path d="m529 521 9-4 5 3 8-7 8 1" fill="none" stroke="#74edcf" stroke-width="2"/>
+    <path d="m440 479 55 20m-55-9 55 20m-55-9 55 20" stroke="#79b8c3" stroke-width="2"/>
+  </g>
+
+  <!-- The former storage room is the presentation theater for the final test. -->
+  <g id="demo-theater">
+    <ellipse cx="866" cy="601" rx="106" ry="20" fill="#041820" opacity=".6" filter="url(#shadow)"/>
+    <path d="M777 535 873 493l104 37-100 46Z" fill="#688291" stroke="#1d3b4a" stroke-width="5"/>
+    <path d="M790 543 878 575v63l-88-37Z" fill="#66776e" stroke="#233942" stroke-width="4"/>
+    <path d="M878 575 967 532v67l-89 39Z" fill="#a39b7e" stroke="#233942" stroke-width="4"/>
+    <path d="M904 567 951 547v51l-47 21Z" fill="#243a42" stroke="#d5bd89" stroke-width="4"/>
+    <path d="M808 562 850 578v25l-42-18Z" fill="#3d6872" stroke="#adc9c1" stroke-width="3"/>
+    <path d="m907 569 40-17v29l-40 17z" fill="#143f4c" stroke="#e1c178" stroke-width="2"/>
+    <path d="m914 580 9-3 5 3 9-8" fill="none" stroke="#81efd0" stroke-width="2"/>
+    <path d="M810 544q46-23 77-29l55 17" fill="none" stroke="#e8c287" stroke-width="3" opacity=".8"/>
+  </g>
+
+  <g opacity=".95">
+    <use href="#tree" x="-19" y="18" width="84" height="96"/><use href="#amber-tree" x="385" y="44" width="70" height="83"/>
+    <use href="#tree" x="449" y="123" width="68" height="81"/><use href="#tree" x="545" y="44" width="79" height="94"/>
+    <use href="#amber-tree" x="934" y="21" width="73" height="88"/><use href="#tree" x="936" y="213" width="72" height="86"/>
+    <use href="#tree" x="7" y="233" width="77" height="92"/><use href="#amber-tree" x="397" y="236" width="72" height="85"/>
+    <use href="#tree" x="577" y="280" width="73" height="87"/><use href="#amber-tree" x="939" y="394" width="81" height="98"/>
+    <use href="#tree" x="8" y="427" width="76" height="90"/><use href="#tree" x="398" y="437" width="68" height="82"/>
+    <use href="#amber-tree" x="495" y="537" width="75" height="90"/><use href="#tree" x="719" y="496" width="65" height="80"/>
+    <use href="#tree" x="10" y="590" width="80" height="97"/><use href="#amber-tree" x="699" y="623" width="68" height="81"/>
+  </g>
+  <g fill="#48715d" opacity=".8"><circle cx="474" cy="224" r="9"/><circle cx="487" cy="230" r="6"/><circle cx="467" cy="378" r="10"/><circle cx="630" cy="223" r="12"/><circle cx="667" cy="483" r="9"/><circle cx="66" cy="634" r="9"/><circle cx="609" cy="75" r="8"/></g>
+  <g fill="#919882" stroke="#425553" stroke-width="2"><path d="M451 201q19-15 36 1l-12 15-22-3z"/><path d="M634 452q11-13 27-3l-5 14-21 4z"/><path d="M559 602q16-11 28 1l-8 10-21-1z"/></g>
+  <g opacity=".9"><use href="#lamp-post" x="467" y="181" width="32" height="65"/><use href="#lamp-post" x="588" y="168" width="30" height="61"/><use href="#lamp-post" x="475" y="339" width="30" height="61"/><use href="#lamp-post" x="608" y="399" width="30" height="61"/><use href="#lamp-post" x="406" y="556" width="30" height="61"/><use href="#lamp-post" x="696" y="564" width="30" height="61"/></g>
+  <path d="M0 8h1000M0 660h1000" stroke="#668072" stroke-width="9" opacity=".4"/>
+</svg>

@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="room" x2="0" y2="1"><stop stop-color="#122338"/><stop offset=".58" stop-color="#101a2a"/><stop offset="1" stop-color="#070e18"/></linearGradient>
+    <linearGradient id="window" x2="0" y2="1"><stop stop-color="#5e9db6"/><stop offset="1" stop-color="#18344c"/></linearGradient>
+    <linearGradient id="desk" x2="0" y2="1"><stop stop-color="#586878"/><stop offset=".18" stop-color="#293847"/><stop offset="1" stop-color="#0a111a"/></linearGradient>
+    <linearGradient id="mat" x2="0" y2="1"><stop stop-color="#263442"/><stop offset="1" stop-color="#111b27"/></linearGradient>
+    <linearGradient id="shade" x2="0" y2="1"><stop stop-color="#030812" stop-opacity=".08"/><stop offset=".6" stop-color="#030812" stop-opacity=".18"/><stop offset="1" stop-color="#030812" stop-opacity=".82"/></linearGradient>
+    <radialGradient id="benchGlow"><stop stop-color="#60caed" stop-opacity=".34"/><stop offset="1" stop-color="#2ca5ce" stop-opacity="0"/></radialGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%"><feGaussianBlur in="SourceAlpha" stdDeviation="12"/><feOffset dy="14"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0.02 0 0 0 0 0.06 0 0 0 .7 0"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="light"><feGaussianBlur stdDeviation="20"/></filter>
+    <clipPath id="leftScope"><rect x="70" y="486" width="139" height="56"/></clipPath>
+    <clipPath id="rightScope"><rect x="1235" y="489" width="228" height="66"/></clipPath>
+  </defs>
+  <style>
+    @keyframes drift { 0%,100% { transform: translateX(-7px); } 50% { transform: translateX(8px); } }
+    @keyframes pulse { 0%,100% { opacity: .18; } 50% { opacity: .42; } }
+    @keyframes sweep { from { transform: translateX(-130px); opacity: .2; } 50% { opacity: .62; } to { transform: translateX(130px); opacity: .2; } }
+    @keyframes trace { from { transform: translateY(0); } to { transform: translateY(54px); } }
+    @keyframes led { 0%,75%,100% { opacity: .18; } 82% { opacity: .9; } }
+    .window-clouds { transform-box: fill-box; animation: drift 29s ease-in-out infinite; }
+    .pulse-light { animation: pulse 3.6s ease-in-out infinite; }
+    .bench-glow { transform-box: fill-box; animation: sweep 8s ease-in-out infinite; }
+    .scope-trace { animation: trace 3.8s linear infinite alternate; }
+    .status-led { animation: led 2.4s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) { .window-clouds,.pulse-light,.bench-glow,.scope-trace,.status-led { animation: none !important; } }
+  </style>
+  <rect width="1600" height="900" fill="url(#room)"/>
+  <path d="M0 0h699v407H0z" fill="url(#window)" stroke="#0a1420" stroke-width="19"/>
+  <g class="window-clouds" fill="#def6fa" opacity=".11"><path d="M45 111q26-31 54 0 29-22 54 0 32-17 50 10H45zM394 153q24-30 51-2 23-24 53 0 32-16 49 12H394z"/></g>
+  <path d="M0 289h699v100H0z" fill="#20394e"/>
+  <g fill="#1b2c41"><path d="M30 236h113v153H30zM163 189h119v200H163zM300 253h99v136h-99zM418 212h127v177H418zM563 261h107v128H563z"/></g>
+  <path d="M232 0v407M463 0v407M0 194h699" stroke="#0b1725" stroke-width="17"/>
+  <g fill="#091321" stroke="#34495b" stroke-width="10"><rect x="790" y="99" width="330" height="216" rx="10"/><rect x="1170" y="68" width="374" height="251" rx="10"/></g>
+  <g fill="#050a12"><rect x="811" y="120" width="288" height="173" rx="6"/><rect x="1192" y="89" width="330" height="209" rx="6"/></g>
+  <path d="M0 420h1600v167H0z" fill="#1b2a3a"/>
+  <g opacity=".7" fill="#607384"><rect x="49" y="454" width="218" height="113" rx="10"/><rect x="307" y="447" width="253" height="124" rx="10"/><rect x="1270" y="435" width="258" height="131" rx="10"/></g>
+  <g fill="#091420"><rect x="65" y="469" width="185" height="76" rx="5"/><rect x="327" y="464" width="213" height="82" rx="5"/><rect x="1289" y="453" width="222" height="88" rx="5"/></g>
+  <g fill="#79d9e7" opacity=".35"><rect x="88" y="491" width="68" height="6" rx="3"/><rect x="88" y="511" width="118" height="5" rx="2"/><rect x="352" y="486" width="124" height="5" rx="2"/><rect x="1313" y="478" width="141" height="5" rx="2"/></g>
+  <g class="pulse-light" fill="#e0f7ff" opacity=".22" filter="url(#light)"><circle cx="350" cy="550" r="84"/><circle cx="1427" cy="536" r="91"/></g>
+  <path d="M0 575h1600v325H0z" fill="url(#desk)"/>
+  <path d="M0 572h1600v32H0z" fill="#718495"/>
+  <path d="M300 594h910v202l-161 68H408l-108-71z" fill="url(#mat)" stroke="#6b8291" stroke-width="12" stroke-linejoin="round" filter="url(#shadow)"/>
+  <path d="M355 624h800v161l-125 51H430l-75-55z" fill="#1a2937" stroke="#0a111b" stroke-width="9" stroke-linejoin="round"/>
+  <path d="M360 638 1150 631" stroke="#5c7180" stroke-width="5" opacity=".65"/>
+  <ellipse class="bench-glow" cx="800" cy="715" rx="260" ry="88" fill="url(#benchGlow)"/>
+  <g fill="#d7e7e8" stroke="#263744" stroke-width="7" filter="url(#shadow)">
+    <path d="M59 476h161v93H59z"/><path d="M70 486h139v56H70z" fill="#0c1722"/>
+    <path d="M1220 475h258v110h-258z"/><path d="M1235 489h228v66h-228z" fill="#0c1722"/>
+  </g>
+  <g clip-path="url(#leftScope)" fill="none" stroke="#44b8d4" stroke-width="5" opacity=".55"><path class="scope-trace" d="M81 523h27l13-23 15 32 16-17h42"/></g>
+  <g clip-path="url(#rightScope)" fill="none" stroke="#44b8d4" stroke-width="5" opacity=".55"><path class="scope-trace" d="M1250 533h56v-24h46v31h83"/></g>
+  <circle class="status-led" cx="245" cy="560" r="5" fill="#ff6274"/><circle class="status-led" cx="1487" cy="573" r="5" fill="#ffb44c"/>
+  <path d="M134 570v45m90-45v45m1054-35v55m174-55v55" stroke="#141f2b" stroke-width="18"/>
+  <g filter="url(#shadow)">
+    <rect x="550" y="711" width="153" height="84" rx="18" fill="#d39d32" stroke="#222a35" stroke-width="10" transform="rotate(-8 550 711)"/>
+    <rect x="567" y="725" width="112" height="34" rx="7" fill="#172432" transform="rotate(-8 567 725)"/>
+    <circle cx="610" cy="777" r="10" fill="#c8d5d8"/>
+  </g>
+  <path d="M1342 728q-107-19-177 28" fill="none" stroke="#e34a4f" stroke-width="15" stroke-linecap="round"/>
+  <path d="M1373 762q-110-16-187 43" fill="none" stroke="#101a28" stroke-width="13" stroke-linecap="round"/>
+  <path d="M137 745q88-32 164 5" fill="none" stroke="#222e3b" stroke-width="17" stroke-linecap="round"/>
+  <rect width="1600" height="900" fill="url(#shade)"/>
+  <rect y="588" width="1600" height="312" fill="#070e17" opacity=".26"/>
+</svg>
