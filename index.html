@@ -179,29 +179,33 @@
     <div class="game-shell">
 
       <div class="hud">
-        <div class="hud-logo">CIRCUIT SECRETS</div>
-        <div class="hud-level" id="hud-level">LEVEL 1 — HARDWARE BAY</div>
-        <div class="hud-module"><span class="status-dot"></span><span>LAB LINK</span><b id="hud-link-status">ISOLATED</b></div>
+        <div class="hud-context">
+          <div class="hud-logo">CIRCUIT SECRETS</div>
+          <div class="hud-level" id="hud-level">LEVEL 1 — HARDWARE BAY</div>
+          <div class="hud-module"><span class="status-dot"></span><span>LAB LINK</span><b id="hud-link-status">ISOLATED</b></div>
+        </div>
         <div class="hud-spacer"></div>
-        <div class="hud-stat timer" id="hud-timer-box">
-          <div class="lbl">TIME</div>
-          <div class="val" id="hud-timer">03:00</div>
-        </div>
-        <div class="hud-stat">
-          <div class="lbl">SCORE</div>
-          <div class="val" id="hud-score">0</div>
-        </div>
-        <div class="hud-stat">
-          <div class="lbl">FOUND</div>
-          <div class="val" id="hud-found">0/10</div>
-        </div>
-        <div class="hud-stat">
-          <div class="lbl">CHAIN</div>
-          <div class="val" id="hud-streak">0</div>
-        </div>
-        <div class="hud-stat overclock-stat" id="hud-overclock-box">
-          <div class="lbl">OVERCLOCK</div>
-          <div class="val" id="hud-overclock">0%</div>
+        <div class="hud-stats" role="group" aria-label="Live game statistics">
+          <div class="hud-stat timer" id="hud-timer-box">
+            <div class="lbl">TIME</div>
+            <div class="val" id="hud-timer">03:00</div>
+          </div>
+          <div class="hud-stat">
+            <div class="lbl">SCORE</div>
+            <div class="val" id="hud-score">0</div>
+          </div>
+          <div class="hud-stat">
+            <div class="lbl">FOUND</div>
+            <div class="val" id="hud-found">0/10</div>
+          </div>
+          <div class="hud-stat">
+            <div class="lbl">CHAIN</div>
+            <div class="val" id="hud-streak">0</div>
+          </div>
+          <div class="hud-stat overclock-stat" id="hud-overclock-box">
+            <div class="lbl">OVERCLOCK</div>
+            <div class="val" id="hud-overclock">0%</div>
+          </div>
         </div>
         <div class="hud-controls">
           <button class="hud-icon-btn rail-utility" id="btn-pause" type="button" title="Pause (P)" aria-label="Pause or resume" aria-keyshortcuts="P"><span class="hud-icon-slot" aria-hidden="true"></span><span class="utility-label">PAUSE</span></button>

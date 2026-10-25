@@ -1,0 +1,92 @@
+--- before/main.js
+
++++ after/main.js
+
+@@ -28,6 +28,7 @@
+
+   timerId:null,
+   hintsLeft:0,
+   scanCharges:0,
++  scanTimer:null,
+   hintsUsedThisLevel:0,
+   hintsUsedTotal:0,
+   streak:0,
+@@ -351,6 +352,7 @@
+
+   return timer;
+ }
+ function clearEffects(){
++  clearScan();
+   state.effects.forEach(clearTimeout);
+   state.effects.clear();
+   if(state.rewardFrame) cancelAnimationFrame(state.rewardFrame);
+@@ -476,6 +478,12 @@
+
+         <g class="surface-art">
+           <g class="target-extrusion" aria-hidden="true" transform="translate(6 8)">${art}</g>
+           <g class="art target-art-2d">${art}</g>
++        </g>
++        <g class="scan-marker" aria-hidden="true">
++          <circle class="scan-backplate" cx="0" cy="0" r="48"></circle>
++          <circle class="scan-ring scan-ring-outer" cx="0" cy="0" r="43"></circle>
++          <circle class="scan-ring scan-ring-inner" cx="0" cy="0" r="31"></circle>
++          <path class="scan-reticle" d="M0 -54v6 M0 48v6 M-54 0h6 M48 0h6"></path>
+         </g>
+         <circle class="hitzone" cx="0" cy="0" r="27"></circle>
+       </g>`;
+@@ -895,11 +903,10 @@
+
+   markInventoryFound(id);
+   playTone('success');
+   const lvl = LEVELS[state.levelIndex];
+-  $('#scene-status').textContent='Object recovered';
+-  clearTimeout(state.statusTimer);
+-  state.effects.delete(state.statusTimer);
+-  state.statusTimer=later(()=>{ $('#scene-status').textContent=''; state.statusTimer=null; },1800);
++  showSceneStatus('Object recovered');
+   if(state.found.size >= lvl.targets.length){
++    clearScan();
++    $('#btn-scan').disabled=true;
+     state.phase='discovery'; state.paused=true;
+     clearInterval(state.timerId);
+     $('.game-shell').inert=true;
+@@ -926,19 +933,33 @@
+
+     onTimeUp();
+   }
+ }
++function showSceneStatus(message,duration=1800){
++  $('#scene-status').textContent=message;
++  clearTimeout(state.statusTimer);
++  state.effects.delete(state.statusTimer);
++  state.statusTimer=later(()=>{ $('#scene-status').textContent=''; state.statusTimer=null; },duration);
++}
++function clearScan(){
++  clearTimeout(state.scanTimer);
++  state.effects.delete(state.scanTimer);
++  state.scanTimer=null;
++  $('#scene-wrap').classList.remove('scan-active');
++  $all('.hidden-object.scan-target',$('#scene-svg')).forEach(g=>g.classList.remove('scan-target'));
++}
+ function scanRemaining(){
+   if(!canSearch() || state.scanCharges<=0) return;
+-  const remaining = document.querySelectorAll('.hidden-object:not(.found)');
++  const remainingIds = new Set(LEVELS[state.levelIndex].targets.filter(t=>!state.found.has(t.id)).map(t=>t.id));
++  const remaining = $all('.hidden-object',$('#scene-svg')).filter(g=>remainingIds.has(g.dataset.id));
+   if(!remaining.length) return;
++  // A new pulse replaces the old timeout so it always lasts its full duration.
++  clearScan();
+   state.scanCharges--;
+   $('#scan-badge').textContent = state.scanCharges;
+   $('#btn-scan').disabled = state.scanCharges<=0;
+   $('#scene-wrap').classList.add('scan-active');
+   remaining.forEach(g=>g.classList.add('scan-target'));
+-  later(()=>{
+-    $('#scene-wrap').classList.remove('scan-active');
+-    remaining.forEach(g=>g.classList.remove('scan-target'));
+-  }, 3200);
++  state.scanTimer=later(clearScan,3200);
++  showSceneStatus('SCAN PULSE: Cyan rings mark every component still needed',3200);
+   playTone('hint');
+ }
+ function useHint(){
